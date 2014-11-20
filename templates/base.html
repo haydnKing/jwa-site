@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static "base.css"%}" />
+    <title>{% block title %}Ajioka Lab{% endblock %}</title>
+    {% block includes %}{% endblock %}
+</head>
+<body>
+    <header id="header" class="header">
+        <div class="wrap">
+            <div class="overflow">
+                <h2>Ajioka Lab</h2>
+            </div>
+            <nav class="main">
+                <ul id="navigation">
+                    <li>Home</li>
+                    <li>Projects</li>
+                    <li>People</li>
+                </ul>
+                <div style="clear:both" />
+            </nav>
+        </div>
+    </header>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <div id="footer">
+        <div class="wrap">
+            <div class="link-row">
+                <ul>
+                    <a target="_blank" href="http://www.cam.ac.uk">
+                        <img src="{% static "img/cam_footer.png" %}" />
+                    </a>
+                    <a target="_blank" href="http://www.path.cam.ac.uk">
+                        <p>Department of Pathology</p>
+                    </a>
+                </ul>
+            </div>
+            <div id="funding" class="link-row">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
