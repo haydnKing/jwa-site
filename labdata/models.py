@@ -40,10 +40,20 @@ class Person(models.Model):
 		return "{} {}".format(self.getTitle(), self.name)
 
 class Project(models.Model):
+	TYPE_CHOICES = {
+			's': 'Synbio',
+			't': 'Toxoplasma',
+			'o': 'Other',
+		}
 	name = models.CharField(max_length=256)
+	type = models.CharField(max_length=1, choices=list(TYPE_CHOICES.items()))
 	short_description = models.CharField(max_length=512)
 	long_description = models.TextField()
 	person = models.ManyToManyField(Person)
+
+	def getType(self):
+		return self.TYPE_CHOICES[self.type]
+	getType.short_description = "Type"
 
 	def __str__(self):
 		return self.name

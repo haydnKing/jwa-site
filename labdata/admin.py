@@ -10,9 +10,12 @@ class MyAdminSite(admin.AdminSite):
 class PersonAdmin(admin.ModelAdmin):
 	list_display = ('__str__', 'getRole')
 
+class ProjectAdmin(admin.ModelAdmin):
+	list_display = ('__str__', 'getType')
+
 admin_site = MyAdminSite(name='myadmin')
 admin_site.register(User, UserAdmin)
 admin_site.register(Group, GroupAdmin)
 admin_site.register(Person, PersonAdmin)
-admin_site.register(Project)
+admin_site.register(Project, ProjectAdmin)
 
