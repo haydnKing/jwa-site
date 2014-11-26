@@ -1,0 +1,18 @@
+{% extends "people.html" %}
+
+{% block subtitle %}{{ person.name }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li><a href='/'>Ajioka Lab</a></li>
+    <li><a href="{% url 'labdata:people' %}">People</a></li>
+    <li><p class='campl-current'>{{ person.name }}</p></li>
+{% endblock %}
+
+{% block sectioncontent %}
+<div class="campl-content-container">
+    <h2>{{ person.name }}</h2>
+
+
+</div>
+
+{% endblock %}

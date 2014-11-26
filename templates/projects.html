@@ -15,17 +15,16 @@
 
 {% block breadcrumbs %}
     <li><a href='/'>Ajioka Lab</a></li>
+    <li><a href="{% url 'labdata:projects' %}">All Projects</a></li>
     {% if area %}
-        <li><a href="{% url 'labdata:projects' %}">All Projects</a></li>
         {% ifequal area 'synbio' %}
         <li><a href="{% url 'labdata:projects' area %}">SynBio Projects</a></li>
         {% endifequal %}
         {% ifequal area 'toxo' %}
         <li><a href="{% url 'labdata:projects' area %}">Toxo Projects</a></li>
         {% endifequal %}
-    {% else %}
-        <li><p class='campl-current'>All Projects</p></li>
     {% endif %}
+    {% block extracrumbs %}{% endblock %}
 
 {% endblock %}
 
@@ -57,8 +56,12 @@
 {% endblock %}
 
 {% block sectioncontent %}
-   <h2>List of Projects</h2>
-
-    <p>Todo! List of every project</p>
-
+    {% for p in projects %}
+    <div class="campl-listing-item clearfix">
+        <p class="campl-listing-title">
+            <a href="{% url 'labdata:project' p.slug %}">{{p.name}}</a>
+        </p>
+        <p>{{p.short_desc}}</p>
+    </div>
+    {% endfor %}
 {% endblock %}

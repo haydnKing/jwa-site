@@ -2,6 +2,10 @@
 
 {% block subtitle %}{{ project.name }}{% endblock %}
 
+{% block extracrumbs %}
+    <li><p class="campl-current">{{project.name}}</p></li>
+{% endblock %}
+
 {% block sectioncontent %}
 <div class="campl-content-container">
     <h2>{{ project.name }}</h2>

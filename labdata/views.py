@@ -10,18 +10,14 @@ def projects(request, area):
 	#get projects from database
 	if area == None:
 		projects = Project.objects.all()
-		title = "All Projects"
 	elif area == 'toxo':
 		projects = Project.objects.filter(type='t')
-		title = "Toxoplasma Gondii Projects"
 	elif area == 'synbio':
 		projects = Project.objects.filter(type='s')
-		title = "Synthetic Biology Projects"
 
 	return render(request, 'projects.html', {
 		'projects': projects.order_by('name'),
 		'area': area,
-		'subtitle': title,
 	})
 
 def project(request, slug):
@@ -30,8 +26,14 @@ def project(request, slug):
 	ctx = {
 				'title': 'Ajioka Lab',
 				'project': project,
-				'projects': Project.objects.all(),
+				'projects': Project.objects.filter(type=project.type).order_by('name'),
+				'area': None,
 	}
+	if project.type == 't':
+		ctx['area'] = 'toxo'
+	elif project.type == 's':
+		ctx['area'] = 'synbio'
+
 	return render(request, 'project.html', ctx)
 
 
@@ -43,7 +45,10 @@ def people(request):
 
 def person(request, slug):
 	person = get_object_or_404(Person, slug=slug)
-	return render(request, 'person.html', {'person': person})
+	return render(request, 'person.html', {
+		'person': person,
+		'people': Person.objects.all().order_by('name')
+		})
 
 contexts = {
 	'news': {
