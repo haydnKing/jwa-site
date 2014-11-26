@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
-{% block title %}JWA Lab: {{ title }}{% endblock %}
-{% block pagetitle %}{{ title }}{% endblock %}
 
 {% block content %}
 <div class="campl-wrap clearfix campl-page-sub-title campl-recessed-sub-title">
@@ -11,7 +9,7 @@
     </div>
     <div class="campl-column9">
         <div class="campl-content-container">
-            <h1 class="campl-sub-title">{{ subtitle }}</h1>
+            <h1 class="campl-sub-title">{% block subtitle %}{{ subtitle }}{% endblock %}</h1>
         </div>
     </div>
 </div>
@@ -24,6 +22,7 @@
             <div class="campl-tertiary-navigation">
                 <div class="campl-tertiary-navigation-structure">
                     <ul class="campl-unstyled-list campl-vertical-breadcrumb">
+                        {% block vbreadcrumbs %}
                         <li><a href="/">AjiokaLab<span class="campl-vertical-breadcrumb-indicator"></span></a></li>
                         {% if vbreadcrumbs %}
                             {% for vb in vbreadcrumbs %}
@@ -32,15 +31,18 @@
                             {% endif %}
                             {% endfor %}
                         {% endif %}
+                        {% endblock %}
                     </ul>	
                     <ul class="campl-unstyled-list campl-vertical-breadcrumb-navigation">	
                         {% with vbreadcrumbs|last as local %}
                         <li class="campl-selected"><a href="{{ local.0 }}">{{ local.1 }}</a>
                         {% endwith %}
                             <ul class='campl-unstyled-list campl-vertical-breadcrumb-children'>
+                        {% block localnav %}
                             {% for nav in localnav %}
                                 <li><a href="{{ nav.0 }}">{{ nav.1 }}</a></li>
                             {% endfor %}
+                        {% endblock %}
                             </ul>
                         </li>
 
@@ -50,18 +52,12 @@
         </div>
         <div class="campl-column6  campl-main-content" id="content">
             <img src="{% static "images/content/recessed-image-placeholder.jpg" %}" alt="" class="campl-scale-with-grid" />
+
             <div class="campl-content-container">
-                <h2>Heading</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <blockquote class="clearfix">
-                    <p>'Tis better to have loved and lost then never to have loved at all. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <p class="campl-quote-mark"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    <cite>William Shakespeare</cite>
-                </blockquote>
-                <p>Text can have inline links to sites like the <a href="http://www.bbc.co.uk">BBC website</a> or the <a href="http://maps.cam.ac.uk">official University of Cambridge map</a>. Links to websites not in the cam.ac.uk domain will be styled as external links (see the BBC example above).</p>
-                
+                {% block sectioncontent %}
+                {% endblock %}
             </div>
+                
         </div>
 
         <div class="campl-column3 campl-secondary-content">

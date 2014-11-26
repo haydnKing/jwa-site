@@ -7,7 +7,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'jwa_site.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     url(r'^admin/', include(admin_site.urls)),
-		url(r'', include('labdata.urls')),
+		url(r'', include('labdata.urls', namespace='labdata')),
 )
 
 handler404 = '404.html'

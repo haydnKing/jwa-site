@@ -1,0 +1,27 @@
+{% extends "sub-section.html" %}
+
+{% block subtitle %}People{% endblock %}
+
+{% block breadcrumbs %}
+    <li><a href='/'>Ajioka Lab</a></li>
+    <li><p class='campl-current'>People</p></li>
+{% endblock %}
+
+{% block vbreadcrumbs %}
+    <li><a href="/">AjiokaLab<span class="campl-vertical-breadcrumb-indicator"></span></a></li>
+    <li><a href="{% url 'labdata:people' %}">People<span class="campl-vertical-breadcrumb-indicator"></span></a></li>
+{% endblock %}
+
+
+{% block localnav %}
+    {% for p in people %}
+        <li><a href="{% url 'labdata:person' p.slug %}">{{ p.name }}</a></li>
+    {% endfor %}
+{% endblock %}
+
+{% block sectioncontent %}
+   <h2>List of People</h2>
+
+    <p>Todo! People will be listed by role (PI, Postdoc etc)</p>
+
+{% endblock %}

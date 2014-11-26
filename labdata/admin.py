@@ -9,11 +9,11 @@ class MyAdminSite(admin.AdminSite):
 
 class PersonAdmin(admin.ModelAdmin):
 	list_display = ('__str__', 'getRole')
-	prepolulated_fields = {'slug': 'name'}
+	prepopulated_fields = {"slug": ("name",)}
 
 class ProjectAdmin(admin.ModelAdmin):
 	list_display = ('__str__', 'getType')
-	prepolulated_fields = {'slug': 'name'}
+	prepopulated_fields = {"slug": ("name",)}
 
 admin_site = MyAdminSite(name='myadmin')
 admin_site.register(User, UserAdmin)

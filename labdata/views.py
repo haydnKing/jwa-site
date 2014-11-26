@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, get_object_or_404
 from django.http import Http404
 
 from labdata.models import Project, Person
@@ -30,21 +30,30 @@ def projects(request, area):
 
 	#work out localnav
 	if area is not None:
-		ctx['localnav'] = [['/projects/{}'.format(p.getUrl()), p.name] for p in projects]
+		ctx['localnav'] = [['/projects/{}'.format(p.slug), p.name] for p in projects]
 
 	return render(request, 'sub-section.html', ctx)
+
+def project(request, slug):
+	"""Project detail page"""
+	project = get_object_or_404(Project, slug=slug)
+	ctx = {
+				'title': 'Ajioka Lab',
+				'project': project,
+				'projects': Project.objects.all(),
+	}
+	return render(request, 'project.html', ctx)
+
 
 def people(request):
 	ctx = {
-				'title': 'Ajioka Lab',
-				'subtitle': 'People',
-				'breadcrumbs': [ ['/', 'Ajioka Lab',],
-												 ['/people', 'People']],
-				'vbreadcrumbs': [ ['/people', 'People'],],
-				'localnav': [["/people/{}".format(p.getUrl()), p.name]
-					for p in Person.objects.all().order_by('name')]
+				'people': Person.objects.all().order_by('name'),
 	}
-	return render(request, 'sub-section.html', ctx)
+	return render(request, 'people.html', ctx)
+
+def person(request, slug):
+	person = get_object_or_404(Person, slug=slug)
+	return render(request, 'person.html', {'person': person})
 
 contexts = {
 	'news': {
