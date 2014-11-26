@@ -7,32 +7,22 @@ def home(request):
 	return render(request, 'home.html')
 
 def projects(request, area):
-	ctx = {
-				'title': 'Ajioka Lab',
-				'subtitle': 'All Projects',
-				'breadcrumbs': [ ['/', 'Ajioka Lab',],
-												 ['/projects', 'Projects']],
-				'vbreadcrumbs': [ ['/projects', 'Projects'],],
-	}
 	#get projects from database
 	if area == None:
-		ctx['localnav'] = [['/projects/synbio', 'Synthetic Biology'],
-										  ['/projects/toxo', 'Toxoplasema Gondii'],]
 		projects = Project.objects.all()
+		title = "All Projects"
 	elif area == 'toxo':
-		ctx['breadcrumbs'].append(['/projects/toxo', 'Toxoplasma Gondii'])
-		ctx['vbreadcrumbs'].append(['/projects/toxo', 'Toxoplasma Gondii'])
 		projects = Project.objects.filter(type='t')
+		title = "Toxoplasma Gondii Projects"
 	elif area == 'synbio':
-		ctx['breadcrumbs'].append(['/projects/synbio', 'Synthetic Biology'])
-		ctx['vbreadcrumbs'].append(['/projects/synbio', 'Synthetic Biology'])
 		projects = Project.objects.filter(type='s')
+		title = "Synthetic Biology Projects"
 
-	#work out localnav
-	if area is not None:
-		ctx['localnav'] = [['/projects/{}'.format(p.slug), p.name] for p in projects]
-
-	return render(request, 'sub-section.html', ctx)
+	return render(request, 'projects.html', {
+		'projects': projects.order_by('name'),
+		'area': area,
+		'subtitle': title,
+	})
 
 def project(request, slug):
 	"""Project detail page"""

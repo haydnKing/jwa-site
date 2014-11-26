@@ -4,7 +4,8 @@ from labdata import views
 
 urlpatterns = patterns('',
 		url(r'^$', views.home),
-		url(r'^projects/(?:(?P<area>synbio|toxo)/)?$', views.projects),
+		url(r'^projects/(?:(?P<area>synbio|toxo)/)?$', views.projects,
+		name='projects'),
 		url(r'^projects/(?P<slug>[\w-]+)/?$', views.project,
 			name='project'),
 		url(r'^people/$', views.people, name='people'),

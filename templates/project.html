@@ -1,12 +1,6 @@
-{% extends "sub-section.html" %}
+{% extends "projects.html" %}
 
 {% block subtitle %}{{ project.name }}{% endblock %}
-
-{% block localnav %}
-    {% for proj in projects %}
-        <li><a href="{% url 'labdata:project' proj.slug %}">{{ proj.name }}</a></li>
-    {% endfor %}
-{% endblock %}
 
 {% block sectioncontent %}
 <div class="campl-content-container">
