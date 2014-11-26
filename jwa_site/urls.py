@@ -9,3 +9,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin_site.urls)),
 		url(r'', include('labdata.urls')),
 )
+
+handler404 = '404.html'
+

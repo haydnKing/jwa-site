@@ -280,9 +280,21 @@
 								<a href="http://www.path.cam.ac.uk">Department of Pathology</a>
 							</li>
                         {% block breadcrumbs %}
+                            {% if breadcrumbs %}
+                            {% for crumb in breadcrumbs %}
+                            <li>
+                                {% if forloop.last %}
+                                <p class="campl-current">{{ crumb.1 }}</p>
+                                {% else %}
+                                <a href="{{ crumb.0 }}">{{ crumb.1 }}</a>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                            {% else %}
 							<li>
 								<p class="campl-current">Ajioka Lab</p>
 							</li>
+                            {% endif %}
                         {% endblock %}
 						</ul>
 					</div>
@@ -298,29 +310,32 @@
 		<div class="campl-wrap clearfix campl-local-navigation" id="local-nav">
 			<div class="campl-local-navigation-container">
 				<ul class="campl-unstyled-list">
-					<li><a href="#">Home</a></li>
-					<li><a href="#">About</a></li>
-                    <li><a href="#">Projects</a>
+					<li><a href="/">Home</a></li>
+					<li><a href="/about">About</a></li>
+                    <li><a href="/projects">Projects</a>
                         <ul class="campl-unstyled-list local-dropdown-menu">
-                            <li><a href="#">Synthetic Biology</a></li>
-                            <li><a href="#">Toxoplasma</a></li>
+                            <li><a href="/projects">All</a></li>
+                            <li><a href="/projects/synbio">Synthetic Biology</a></li>
+                            <li><a href="/projects/toxo">Toxoplasma</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Resources</a>
+                    <li><a href="/resources">Resources</a>
                         <ul class="campl-unstyled-list local-dropdown-menu">
-                            <li><a href="#">Synthetic Biology</a></li>
-                            <li><a href="#">Toxoplasma</a></li>
+                            <li><a href="/resources">All</a></li>
+                            <li><a href="/resources/synbio">Synthetic Biology</a></li>
+                            <li><a href="/resources/toxo">Toxoplasma</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Funding</a></li>
-                    <li><a href="#">Publications</a>
+                    <li><a href="/funding">Funding</a></li>
+                    <li><a href="/publications">Publications</a>
                         <ul class="campl-unstyled-list local-dropdown-menu">
-                            <li><a href="#">Synthetic Biology</a></li>
-                            <li><a href="#">Toxoplasma</a></li>
+                            <li><a href="/publications">All</a></li>
+                            <li><a href="/publications/synbio">Synthetic Biology</a></li>
+                            <li><a href="/publications/toxo">Toxoplasma</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">News</a></li>
-                    <li><a href="#">People</a></li>
+                    <li><a href="/news">News</a></li>
+                    <li><a href="/people">People</a></li>
 				</ul>
 			</div>
 		</div>

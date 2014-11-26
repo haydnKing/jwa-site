@@ -1,4 +1,5 @@
 from django.db import models
+import urllib.parse
 
 class Person(models.Model):
 	class Meta:
@@ -28,6 +29,7 @@ class Person(models.Model):
 	bio = models.TextField(blank=True)
 	mug_shot = models.ImageField(blank=True)
 	email = models.EmailField()
+	slug = models.SlugField(unique=True)
 
 	def getTitle(self):
 		return self.TITLE_CHOICES[self.title]
@@ -50,6 +52,7 @@ class Project(models.Model):
 	short_description = models.CharField(max_length=512)
 	long_description = models.TextField()
 	person = models.ManyToManyField(Person)
+	slug = models.SlugField(unique=True)
 
 	def getType(self):
 		return self.TYPE_CHOICES[self.type]
