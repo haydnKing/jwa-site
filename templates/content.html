@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{% block content %}
+<div class="campl-row campl-content campl-recessed-content">
+    <div class="campl-wrap clearfix">
+        <div class="campl-column3">
+            <div class="campl-tertiary-navigation">
+                <div class="campl-tertiary-navigation-structure">
+                    <ul class="campl-unstyled-list campl-vertical-breadcrumb">
+                        <li><a href="/">AjiokaLab<span class="campl-vertical-breadcrumb-indicator"></span></a></li>
+                        {% block vbreadcrumbs %}
+                        {% endblock %}
+                    </ul>	
+                    <ul class="campl-unstyled-list campl-vertical-breadcrumb-navigation">	
+                        {% block localnav %}
+                        {% endblock %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="{% if show_links %}campl-column6{% else %}campl-column9{% endif %}  campl-main-content" id="content">
+                {% block maincontent %}
+                {% endblock %}
+        </div>
+
+        {% if show_links %}
+        <div class="campl-column3 campl-secondary-content">
+            {% include "related-links.html" %} 
+        </div>
+        {% endif %}
+    </div>	
+</div>
+{% endblock %}

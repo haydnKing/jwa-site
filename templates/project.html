@@ -1,26 +1,29 @@
 {% extends "projects.html" %}
+{% load staticfiles %}
 
-{% block subtitle %}{{ project.name }}{% endblock %}
+{% block subtitle %}Projects : {{project.name}}{% endblock %} 
 
 {% block extracrumbs %}
-    <li><p class="campl-current">{{project.name}}</p></li>
+    <li><a href="{% url 'labdata:project' project.area project.slug %}">{{ project.name }}</a></li>
 {% endblock %}
 
-{% block sectioncontent %}
-<div class="campl-content-container">
-    <h2>{{ project.name }}</h2>
 
-    {{ project.long_description }}
 
-    {% if project.people %}
-    <h3>People</h3>
-    <ul class="campl-unstyled-list">
-    {% for person in project.people %}
-        <li><a href="/people/{{person.slug}}">{{person.name}}</a></li>    
-    {% endfor %}
-    </ul>
-    {% endif %}
+{% block maincontent %}
+    <img src="{% static 'images/content/carousel-4.png' %}" alt="" class="campl-scale-with-grid" />
+
+    <div class="campl-content-container">
+        <h2>{{ project.name }}</h2>
+
+        {{ project.long_description|linebreaks }}
+
+        <h4>People</h4>
+        <ul class="campl-unstyled-list">
+            {% for p in project.person.all %}
+            <li><a href="#">{{ p.fullName }}</a></li>
+            {% endfor %}
+        </li>
+    </div>
     
-</div>
-
 {% endblock %}
+

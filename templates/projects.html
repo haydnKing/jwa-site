@@ -1,70 +1,39 @@
-{% extends "sub-section.html" %}
+{% extends "area.html" %}
+{% load staticfiles %}
 
 {% block subtitle %}
     {% if area %}
-        {% ifequal area 'synbio' %}
-        Synthetic Biology Projects
-        {% endifequal %}
-        {% ifequal area 'toxo' %}
-        Toxoplasma Gondii Projects
-        {% endifequal %}
+    Projects :
+        {% ifequal area 'synbio' %}Synthetic Biology{% endifequal %}
+        {% ifequal area 'toxo' %}Toxoplasma Gondii{% endifequal %}
+        {% ifequal area 'other' %}Other{% endifequal %}
     {% else %}
-        All Projects
+        Projects
     {% endif %}
 {% endblock %}
 
-{% block breadcrumbs %}
-    <li><a href='/'>Ajioka Lab</a></li>
-    <li><a href="{% url 'labdata:projects' %}">All Projects</a></li>
-    {% if area %}
-        {% ifequal area 'synbio' %}
-        <li><a href="{% url 'labdata:projects' area %}">SynBio Projects</a></li>
-        {% endifequal %}
-        {% ifequal area 'toxo' %}
-        <li><a href="{% url 'labdata:projects' area %}">Toxo Projects</a></li>
-        {% endifequal %}
-    {% endif %}
-    {% block extracrumbs %}{% endblock %}
-
-{% endblock %}
-
-{% block vbreadcrumbs %}
-    <li><a href="/">AjiokaLab<span class="campl-vertical-breadcrumb-indicator"></span></a></li>
-    <li><a href="{% url 'labdata:projects' %}">All Projects<span class="campl-vertical-breadcrumb-indicator"></span></a></li>
-    {% if area %}
-    <li><a href="{% url 'labdata:projects' area %}">
-        {% ifequal area 'synbio' %}
-            Synthetic Biology Projects
-        {% endifequal %}
-        {% ifequal area 'toxo' %}
-            Toxoplasma Gondii Projects
-        {% endifequal %}
-    <span class="campl-vertical-breadcrumb-indicator"></span></a></li>
-    {% endif %}
+{% block localnav_items %}
+    {% for p in projects %}
+        <li><a href="{% url 'labdata:project' area p.slug %}">{{p.name}}</a></li>
+    {% endfor %}
 {% endblock %}
 
 
-{% block localnav %}
-    {% if area %}
-        {% for p in projects %}
-            <li><a href="{% url 'labdata:project' p.slug %}">{{ p.name }}</a></li>
-        {% endfor %}
-    {% else %}
-        <li><a href="{% url 'labdata:projects' 'synbio' %}">Synthetic Biology</a></li>
-        <li><a href="{% url 'labdata:projects' 'toxo' %}">Toxoplasma Gondii</a></li>
-    {% endif %}
-{% endblock %}
+{% block maincontent %}
+    <img src="{% static 'images/content/recessed-image-placeholder.jpg' %}" alt="" class="campl-scale-with-grid" />
 
-{% block sectioncontent %}
     <div class="campl-content-container">
         {% for p in projects %}
-        <div class="campl-listing-item clearfix">
-            <p class="campl-listing-title">
-                <a href="{% url 'labdata:project' p.slug %}">{{p.name}}</a>
-            </p>
-            <p>{{p.short_desc}}</p>
-            <a class="campl-secondary-cta campl-float-right" href="{% url 'labdata:project' p.slug %}">Read More</a>
-        </div>
+            <div class="campl-listing-item clearfix">
+                <p class="campl-listing-title">
+                    <a href="{% url 'labdata:project' p.area p.slug %}">{{ p.name }}</a>
+                </p>
+                <p>
+                    {{ p.short_description }}
+                </p>
+                <a class="campl-secondary-cta campl-float-right" href="{% url 'labdata:project' p.area p.slug %}">Read More</a>
+            </div>
         {% endfor %}
     </div>
 {% endblock %}
+

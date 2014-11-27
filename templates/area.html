@@ -1,0 +1,53 @@
+{% extends "content.html" %}
+{% load staticfiles %}
+
+{% block breadcrumbs %}
+    {% with 'labdata:'|add:subtitle as urlarg %}
+        <li><a href="{% url urlarg %}">{{ subtitle|title }}</a></li>
+        {% if area %}
+            <li><a href="{% url urlarg area %}">
+            {% ifequal area "toxo" %}Toxoplasma Gondii{% endifequal %}
+            {% ifequal area "synbio" %}Synthetic biology{% endifequal %}
+            {% ifequal area "other" %}Other{% endifequal %}
+            </a></li>
+        {% endif %}
+        {% block extracrumbs %}{% endblock %}
+    {% endwith %}
+{% endblock %}
+
+
+{% block vbreadcrumbs %}
+    {% if area %}
+    <li><a href="{% url 'labdata:'|add:subtitle %}">{{ subtitle|title }}<span class="campl-vertical-breadcrumb-indicator"></span></a></li>
+    {% endif %}
+{% endblock %}
+
+
+{% block localnav %}
+    {% with 'labdata:'|add:subtitle as urlarg %}
+        {% if area %}
+            <li class="campl-selected">
+                <a href="{% url urlarg area %}">
+                {% ifequal area "toxo" %}Toxoplasma Gondii{% endifequal %}
+                {% ifequal area "synbio" %}Synthetic biology{% endifequal %}
+                {% ifequal area "other" %}Other{% endifequal %}
+                </a>
+                <ul class="campl-unstyled-list campl-vertical-breadcrumb-children">
+                    {% block localnav_items %}
+                    {% endblock %}
+                </ul>
+            </li>
+        {% else %}
+            <li class="campl-selected">
+                <a href="{% url urlarg %}">{{ subtitle|title }}</a>
+                <ul class="campl-unstyled-list campl-vertical-breadcrumb-children">
+                    <li><a href="{% url urlarg 'synbio' %}">Synthetic Biology</a></li>
+                    <li><a href="{% url urlarg 'toxo' %}">Toxoplasma Gondii</a></li>
+                    <li><a href="{% url urlarg 'other' %}">Other</a></li>
+                </ul>
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
+{% block maincontent %}
+{% endblock %}

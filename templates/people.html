@@ -1,27 +1,46 @@
-{% extends "sub-section.html" %}
+{% extends "content.html" %}
+{% load staticfiles %}
 
 {% block subtitle %}People{% endblock %}
 
 {% block breadcrumbs %}
-    <li><a href='/'>Ajioka Lab</a></li>
-    <li><p class='campl-current'>People</p></li>
+    <li><a href="{% url 'labdata:people' %}">People</a></li>
+    {% block extracrumbs %}{% endblock %}
 {% endblock %}
+
 
 {% block vbreadcrumbs %}
-    <li><a href="/">AjiokaLab<span class="campl-vertical-breadcrumb-indicator"></span></a></li>
-    <li><a href="{% url 'labdata:people' %}">People<span class="campl-vertical-breadcrumb-indicator"></span></a></li>
 {% endblock %}
-
 
 {% block localnav %}
-    {% for p in people %}
-        <li><a href="{% url 'labdata:person' p.slug %}">{{ p.name }}</a></li>
-    {% endfor %}
+    <li class="campl-selected">
+        <a href="{% url 'labdata:people' %}">People</a>
+        <ul class="campl-unstyled-list campl-vertical-breadcrumb-children">
+            {% for p in people %}
+            <li><a href="{% url 'labdata:person' p.slug %}">{{p.fullName}}</a></li>
+            {% endfor %}
+        </ul>
 {% endblock %}
 
-{% block sectioncontent %}
-   <h2>List of People</h2>
+{% block maincontent %}
+    <img src="{% static 'images/content/recessed-image-placeholder.jpg' %}" alt="" class="campl-scale-with-grid" />
 
-    <p>Todo! People will be listed by role (PI, Postdoc etc)</p>
-
+    <div class="campl-content-container">
+        {% for role,peeps in people_by_role %}
+            {% if peeps %}
+                <h3>{{ role }}</h3>
+                <div class="campl-content-container">
+                    {% for p in peeps %}
+                        <div class="campl-listing-item clearfix">
+                            <p class="campl-listing-title">
+                                <a href="{% url 'labdata:person' p.slug %}">{{ p.name }}</a>
+                            </p>
+                            <a class="campl-secondary-cta campl-float-right" href="{% url 'labdata:person' p.slug %}">Read More</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 {% endblock %}
+

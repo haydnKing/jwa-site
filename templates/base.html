@@ -279,22 +279,10 @@
 							<li>
 								<a href="http://www.path.cam.ac.uk">Department of Pathology</a>
 							</li>
-                        {% block breadcrumbs %}
-                            {% if breadcrumbs %}
-                            {% for crumb in breadcrumbs %}
                             <li>
-                                {% if forloop.last %}
-                                <p class="campl-current">{{ crumb.1 }}</p>
-                                {% else %}
-                                <a href="{{ crumb.0 }}">{{ crumb.1 }}</a>
-                                {% endif %}
+                                <a href="/">Ajioka Lab</a>
                             </li>
-                            {% endfor %}
-                            {% else %}
-							<li>
-								<p class="campl-current">Ajioka Lab</p>
-							</li>
-                            {% endif %}
+                        {% block breadcrumbs %}
                         {% endblock %}
 						</ul>
 					</div>
@@ -340,7 +328,7 @@
             </div>
             <div class="campl-column9">
                 <div class="campl-content-container">
-                    <h1 class="campl-sub-title">{% block subtitle %}{{ subtitle }}{% endblock %}</h1>
+                    <h1 class="campl-sub-title">{% block subtitle %}{{ subtitle|title }}{% endblock %}</h1>
                 </div>
             </div>
         </div>

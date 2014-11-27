@@ -22,6 +22,14 @@ class Person(models.Model):
 		'e': 'Collaborator',
 		'f': 'Advisor',
 	}
+	ROLE_CHOICES_PL = {
+		'a': 'Principal Investigator', #Should only be one of these
+		'b': 'Postdoctorial Researchers',
+		'c': 'Graduate Students',
+		'd': 'Undergraduate Students',
+		'e': 'Collaborators',
+		'f': 'Advisors',
+	}
 
 	name = models.CharField(max_length=512)
 	title = models.CharField(max_length=1, choices=list(TITLE_CHOICES.items()))
@@ -37,9 +45,13 @@ class Person(models.Model):
 	def getRole(self):
 		return self.ROLE_CHOICES[self.role]
 	getRole.short_description = "Role"
+	def fullName(self):
+		return "{} {}".format(self.getTitle(), self.name)
+	fullName.short_description = "fullName"
+
 
 	def __str__(self):
-		return "{} {}".format(self.getTitle(), self.name)
+		return self.fullName();
 
 class Project(models.Model):
 	TYPE_CHOICES = {
@@ -57,6 +69,13 @@ class Project(models.Model):
 	def getType(self):
 		return self.TYPE_CHOICES[self.type]
 	getType.short_description = "Type"
+
+	def area(self):
+		if self.type == 's':
+			return 'synbio'
+		elif self.type == 't':
+			return 'toxo'
+		return 'other'
 
 	def __str__(self):
 		return self.name

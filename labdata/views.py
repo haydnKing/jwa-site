@@ -7,107 +7,61 @@ def home(request):
 	return render(request, 'home.html')
 
 def projects(request, area):
-	#get projects from database
+	print("Projects")
 	if area == None:
 		projects = Project.objects.all()
 	elif area == 'toxo':
 		projects = Project.objects.filter(type='t')
 	elif area == 'synbio':
 		projects = Project.objects.filter(type='s')
+	elif area == 'other':
+		projects = Project.objects.filter(type='o')
 
 	return render(request, 'projects.html', {
 		'projects': projects.order_by('name'),
 		'area': area,
+		'show_links': True,
+		'subtitle': 'projects',
 	})
 
-def project(request, slug):
+def project(request, area, slug):
 	"""Project detail page"""
-	project = get_object_or_404(Project, slug=slug)
+	print("Project")
+	if area == 'toxo':
+		a='t'
+	elif area == 'synbio':
+		a='s'
+	elif area == 'other':
+		a='o'
+
+	project = get_object_or_404(Project, slug=slug, type=a)
 	ctx = {
 				'title': 'Ajioka Lab',
+				'subtitle': 'projects',
 				'project': project,
 				'projects': Project.objects.filter(type=project.type).order_by('name'),
-				'area': None,
+				'area': area,
+				'show_links': False,
 	}
-	if project.type == 't':
-		ctx['area'] = 'toxo'
-	elif project.type == 's':
-		ctx['area'] = 'synbio'
 
 	return render(request, 'project.html', ctx)
 
-
 def people(request):
-	ctx = {
-				'people': Person.objects.all().order_by('name'),
-	}
-	return render(request, 'people.html', ctx)
+	people = Person.objects.all().order_by('name')
+	roles = ['a','b','c','d','e','f',]
+	people_by_role = [(Person.ROLE_CHOICES_PL[r], people.filter(role=r)) for r in roles]
+	return render(request, 'people.html', {
+		'people': people,
+		'show_links': True,
+		'people_by_role': people_by_role,
+	})
 
 def person(request, slug):
-	person = get_object_or_404(Person, slug=slug)
+	people = Person.objects.all().order_by('name')
+	person = people.get(slug=slug)
+	
 	return render(request, 'person.html', {
+		'people': people,
+		'show_links': False,
 		'person': person,
-		'people': Person.objects.all().order_by('name')
-		})
-
-def publications(request):
-	return render(request, 'publications.html', {})
-
-contexts = {
-	'news': {
-				'title': 'Ajioka Lab',
-				'subtitle': 'News',
-				'breadcrumbs': [ ['/', 'Ajioka Lab',],
-												 ['/news', 'News']],
-				'vbreadcrumbs': [ ['/news', 'News'],],
-				'localnav': [],
-	},
-	'resources': {
-				'title': 'Ajioka Lab',
-				'subtitle': 'Resources',
-				'breadcrumbs': [ ['/', 'Ajioka Lab',],
-												 ['/resources', 'Resources']],
-				'vbreadcrumbs': [ ['/resources', 'Resources'],],
-				'localnav': [['/resources/synbio', 'Synthetic Biology',],
-										 ['/resources/toxo', 'Toxoplasma Gondii',],
-					],
-	},
-	'funding': {
-				'title': 'Ajioka Lab',
-				'subtitle': 'Funding',
-				'breadcrumbs': [ ['/', 'Ajioka Lab',],
-												 ['/funding', 'Funding']],
-				'vbreadcrumbs': [ ['/funding', 'Funding'],],
-				'localnav': [['/funding/grant1', 'Grant 1',],
-										 ['/funding/grant2', 'Grant 2',],
-										 ['/funding/grantN', 'Grant N',],
-					],
-	},
-	'about': {
-				'title': 'Ajioka Lab',
-				'subtitle': 'About',
-				'breadcrumbs': [ ['/', 'Ajioka Lab',],
-												 ['/about', 'About']],
-				'vbreadcrumbs': [ ['/about', 'About'],],
-				'localnav': [['/about/synbio', 'Synthetic Biology',],
-										 ['/about/toxo', 'Toxoplasma Gondii',],
-										 ['/about/contact', 'Contact',],
-					],
-	},
-	'publications': {
-				'title': 'Ajioka Lab',
-				'subtitle': 'Publications',
-				'breadcrumbs': [ ['/', 'Ajioka Lab',],
-												 ['/publications', 'Publications']],
-				'vbreadcrumbs': [ ['/publications', 'Publications'],],
-				'localnav': [['/publications/synbio', 'Synthetic Biology',],
-										 ['/publications/toxo', 'Toxoplasma Gondii',],
-					],
-	},
-}
-
-def subsection(request, name):
-	try:
-		return render(request, 'sub-section.html', contexts[name])
-	except KeyError:
-		raise Http404
+	})
