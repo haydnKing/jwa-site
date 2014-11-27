@@ -56,12 +56,15 @@
 {% endblock %}
 
 {% block sectioncontent %}
-    {% for p in projects %}
-    <div class="campl-listing-item clearfix">
-        <p class="campl-listing-title">
-            <a href="{% url 'labdata:project' p.slug %}">{{p.name}}</a>
-        </p>
-        <p>{{p.short_desc}}</p>
+    <div class="campl-content-container">
+        {% for p in projects %}
+        <div class="campl-listing-item clearfix">
+            <p class="campl-listing-title">
+                <a href="{% url 'labdata:project' p.slug %}">{{p.name}}</a>
+            </p>
+            <p>{{p.short_desc}}</p>
+            <a class="campl-secondary-cta campl-float-right" href="{% url 'labdata:project' p.slug %}">Read More</a>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 {% endblock %}

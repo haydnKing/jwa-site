@@ -11,4 +11,5 @@ urlpatterns = patterns('',
 		url(r'^people/$', views.people, name='people'),
 		url(r'^people/(?P<slug>[\w-]+)/$', views.person,
 			name='person'),
+		url(r'^publications/$', views.publications, name='publications'),
 	)

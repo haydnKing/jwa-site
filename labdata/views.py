@@ -50,6 +50,9 @@ def person(request, slug):
 		'people': Person.objects.all().order_by('name')
 		})
 
+def publications(request):
+	return render(request, 'publications.html', {})
+
 contexts = {
 	'news': {
 				'title': 'Ajioka Lab',
