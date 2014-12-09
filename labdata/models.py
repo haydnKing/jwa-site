@@ -1,5 +1,6 @@
 from django.db import models
 import urllib.parse
+from tinymce import models as tinymce_models
 
 class Person(models.Model):
 	class Meta:
@@ -62,7 +63,7 @@ class Project(models.Model):
 	name = models.CharField(max_length=256)
 	type = models.CharField(max_length=1, choices=list(TYPE_CHOICES.items()))
 	short_description = models.CharField(max_length=512)
-	long_description = models.TextField()
+	long_description = tinymce_models.HTMLField()
 	person = models.ManyToManyField(Person)
 	slug = models.SlugField(unique=True)
 
