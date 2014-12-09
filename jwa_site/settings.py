@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import localsettings
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -36,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+		'tinymce',
 		'labdata',
 )
 
@@ -52,6 +54,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'jwa_site.urls'
 
 WSGI_APPLICATION = 'jwa_site.wsgi.application'
+
 
 
 # Database
@@ -87,3 +90,4 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
 	os.path.join(BASE_DIR, "static"),
 )
+STATIC_ROOT = localsettings.STATIC_ROOT
