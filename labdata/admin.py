@@ -4,6 +4,9 @@ from labdata.models import Person, Project
 from django.contrib.auth.admin import UserAdmin, GroupAdmin
 from django.contrib.auth.models import User, Group
 
+from django.contrib.flatpages.admin import FlatPageAdmin
+from django.contrib.flatpages.models import FlatPage
+
 class MyAdminSite(admin.AdminSite):
 	site_header = "Ajioka Lab Administration"
 
@@ -20,4 +23,6 @@ admin_site.register(User, UserAdmin)
 admin_site.register(Group, GroupAdmin)
 admin_site.register(Person, PersonAdmin)
 admin_site.register(Project, ProjectAdmin)
+
+admin_site.register(FlatPage, FlatPageAdmin)
 
