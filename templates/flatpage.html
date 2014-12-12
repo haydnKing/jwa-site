@@ -1,6 +1,12 @@
+
 {% extends "content.html" %}
 {% load staticfiles %}
 
+{% block content %}
+    {% with True as show_links %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
 
 {% block vbreadcrumbs %}
 {% endblock %}
@@ -24,4 +30,5 @@
 {% block maincontent %}
     {{ flatpage.content }}
 {% endblock %}
+
 
