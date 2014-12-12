@@ -973,17 +973,12 @@ projectlight.createCarousel = function(){
 
 //only mark external links inside of the main content area as denoted by the campl-skipTo ID
 projectlight.markExternalLinks = function(){
-	if (jQuery.browser.msie) {
-		$("#content a[href*='cam.ac.uk']").not(".campl-carousel a[href*='http://']").addClass("campl-external").attr({
-			"title": $(this).attr("title")+" (Link to an external website)"
-		})	
-	}else{
-		$('#content a').not(".campl-carousel a").filter(function(){
-			return this.hostname && !this.hostname.match(/cam.ac.uk/gi);
-		}).addClass("campl-external").attr({
-			"title": $(this).attr("title")+" (Link to an external website)"
-		})
-	}
+    var p = new RegExp('cam.ac.uk|' + window.location.hostname, 'gi');
+    $('#content a').not(".campl-carousel a").filter(function(){
+        return this.hostname && !this.hostname.match(p);
+    }).addClass("campl-external").attr({
+        "title": $(this).attr("title")+" (Link to an external website)"
+    })
 }
 
 //DOM ready 
