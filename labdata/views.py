@@ -1,10 +1,13 @@
 from django.shortcuts import render, render_to_response, get_object_or_404
 from django.http import Http404
 
+from django.contrib.flatpages.models import FlatPage
+
 from labdata.models import Project, Person
 
 def home(request):
-	return render(request, 'home.html')
+	fp = get_object_or_404(FlatPage, title="Home")
+	return render(request, 'home.html', {'flatpage': fp})
 
 def projects(request, area):
 	print("Projects")
