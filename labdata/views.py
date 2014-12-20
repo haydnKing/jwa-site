@@ -1,9 +1,15 @@
-from django.shortcuts import render, render_to_response, get_object_or_404
+from django.shortcuts import get_object_or_404
+import django.shortcuts
 from django.http import Http404
 
 from django.contrib.flatpages.models import FlatPage
 
-from labdata.models import Project, Person
+from labdata.models import Project, Person, RelatedLink, Resource
+
+def render(request, template, context):
+	context['related_links'] = RelatedLink.objects.all().order_by('order')
+	return django.shortcuts.render(request, template, context)
+	
 
 def home(request):
 	fp = get_object_or_404(FlatPage, title="Home")

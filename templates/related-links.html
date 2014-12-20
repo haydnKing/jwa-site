@@ -5,12 +5,9 @@
         <h2>Related Links</h2>
     </div>
     <ul class='campl-unstyled-list campl-related-links'>
-        <li><a href="#">Pull a list of useful links</a></li>
-        <li><a href="#">from the database</a></li>
-        <li><a href="#">and put them here.</a></li>
-        <li><a href="#">Handy for when</a></li>
-        <li><a href="#">"There's a link to it on my site"</a></li>
-        <li><a href="#">happens</a></li>
+        {% for l in related_links %}
+            <li><a href="{{ l.url }}">{{ l.text }}</a></li>
+        {% endfor %}
     </ul>
 </div>
 <div class="campl-content-container">

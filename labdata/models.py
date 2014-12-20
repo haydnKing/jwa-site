@@ -1,6 +1,7 @@
 from django.db import models
 import urllib.parse
 from tinymce import models as tinymce_models
+from orderedmodel import OrderedModel
 
 class Person(models.Model):
 	class Meta:
@@ -39,6 +40,8 @@ class Person(models.Model):
 	mug_shot = models.ImageField(blank=True)
 	email = models.EmailField()
 	slug = models.SlugField(unique=True)
+	current = models.BooleanField(default=True, 
+			verbose_name="Current Lab Member")
 
 	def getTitle(self):
 		return self.TITLE_CHOICES[self.title]
@@ -80,5 +83,24 @@ class Project(models.Model):
 
 	def __str__(self):
 		return self.name
+
+class RelatedLink(OrderedModel):
+	"""Related links for the sidebar"""
+	text = models.CharField(max_length=128)
+	url = models.URLField()
+
+	def __str__(self):
+		return "{} : {}".format(self.text, self.url)
+
+class Resource(OrderedModel):
+	"""A list of useful resources - more complete than the related links"""
+	title = models.CharField(max_length=64)
+	desc = models.TextField(verbose_name="description")
+	url = models.URLField()
+	icon = models.ImageField(blank=True)
+
+	def __str__(self):
+		return "{} : {}".format(self.title, self.url)
+
 
 

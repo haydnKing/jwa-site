@@ -40,6 +40,7 @@ INSTALLED_APPS = (
 		'django.contrib.sites',
 		'django.contrib.flatpages',
 		'tinymce',
+		'orderedmodel',
 		'labdata',
 )
 
@@ -93,3 +94,6 @@ STATICFILES_DIRS = (
 	os.path.join(BASE_DIR, "static"),
 )
 STATIC_ROOT = localsettings.STATIC_ROOT
+
+MEDIA_ROOT = localsettings.MEDIA_ROOT
+MEDIA_URL = "/media/"
