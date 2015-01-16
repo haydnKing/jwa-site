@@ -103,4 +103,21 @@ class Resource(OrderedModel):
 		return "{} : {}".format(self.title, self.url)
 
 
+class Publication(models.Model):
+	TYPE_CHOICES = {
+			's': 'Synbio',
+			't': 'Toxoplasma',
+			'o': 'Other',
+		}
+
+	title = models.CharField(max_length=512)
+	date = models.DateField()
+	journal = models.CharField(max_length=128)
+	link = models.UrlField()
+
+	abstract = models.TextField()
+	people = models.ManyToManyField(person)
+	type = models.CharField(max_length=1, choices=list(TYPE_CHOICES.items()))
+	document = models.FileField(blank=True)
+
 
