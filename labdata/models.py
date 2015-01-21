@@ -40,15 +40,23 @@ class Person(models.Model):
 		'f': 'Advisors',
 	}
 
-	name = models.CharField(max_length=512)
-	title = models.CharField(max_length=1, choices=list(TITLE_CHOICES.items()))
-	role = models.CharField(max_length=1, choices=list(ROLE_CHOICES.items()))
-	bio = models.TextField(blank=True)
-	mug_shot = models.ImageField(blank=True)
-	email = models.EmailField()
+	name = models.CharField(max_length=512, 
+			help_text="The person's full name")
+	title = models.CharField(max_length=1, 
+			choices=list(TITLE_CHOICES.items()))
+	role = models.CharField(max_length=1, 
+			choices=list(ROLE_CHOICES.items()),
+			help_text="The person's main role")
+	bio = models.TextField(blank=True,
+			help_text="Short background about the person")
+	mug_shot = models.ImageField(blank=True,
+			help_text="Optional mug shot")
+	email = models.EmailField(blank=True,
+			help_text="Contact email - if completed this will be publically available")
 	slug = models.SlugField(unique=True)
 	current = models.BooleanField(default=True, 
-			verbose_name="Current Lab Member")
+			verbose_name="Current Lab Member",
+			help_text="Is this person a current member of the lab?")
 
 	def getTitle(self):
 		return self.TITLE_CHOICES[self.title]
