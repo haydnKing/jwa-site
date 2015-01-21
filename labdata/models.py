@@ -49,6 +49,7 @@ class Person(models.Model):
 			help_text="The person's main role")
 	bio = models.TextField(blank=True,
 			help_text="Short background about the person")
+	research_interests = tinymce_models.HTMLField()
 	mug_shot = models.ImageField(blank=True, upload_to="mugshots/",
 			help_text="Optional mug shot")
 	email = models.EmailField(blank=True,
@@ -80,6 +81,7 @@ class Project(models.Model):
 	long_description = tinymce_models.HTMLField()
 	person = models.ManyToManyField(Person)
 	slug = models.SlugField(unique=True)
+	banner_image = models.ImageField(blank=True, upload_to="project_images/")
 
 	def getType(self):
 		return TYPE_CHOICES[self.type]

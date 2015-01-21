@@ -1,16 +1,7 @@
 {% extends "area.html" %}
 {% load staticfiles %}
 
-{% block subtitle %}
-    {% if area %}
-    Projects :
-        {% ifequal area 'synbio' %}Synthetic Biology{% endifequal %}
-        {% ifequal area 'toxo' %}Toxoplasma Gondii{% endifequal %}
-        {% ifequal area 'other' %}Other{% endifequal %}
-    {% else %}
-        Projects
-    {% endif %}
-{% endblock %}
+{% block subtitle %}Projects{% endblock %}
 
 {% block localnav_items %}
     {% for p in projects %}
@@ -23,17 +14,14 @@
     <img src="{% static 'images/content/recessed-image-placeholder.jpg' %}" alt="" class="campl-scale-with-grid" />
 
     <div class="campl-content-container">
+        <h3>Synthetic Biology</h3>
         {% for p in projects %}
-            <div class="campl-listing-item clearfix">
-                <p class="campl-listing-title">
-                    <a href="{% url 'labdata:project' p.area p.slug %}">{{ p.name }}</a>
-                </p>
-                <p>
-                    {{ p.short_description }}
-                </p>
-                <a class="campl-secondary-cta campl-float-right" href="{% url 'labdata:project' p.area p.slug %}">Read More</a>
-            </div>
+            {% include 'project_listing.html' with project=p only %}
         {% endfor %}
+        <h3>Toxoplasma Gondii</h3>
+
+        <h3>Other Projects</h3>
+
     </div>
 {% endblock %}
 

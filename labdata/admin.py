@@ -16,17 +16,20 @@ class PersonAdmin(admin.ModelAdmin):
 	list_display = ('__str__', 'getRole')
 	prepopulated_fields = {"slug": ("name",)}
 	fields = ["title", "name", "role", "current", "email", "mug_shot", 
-			"bio", "slug"]
+			"research_interests", "bio", "slug"]
 
 class ProjectAdmin(admin.ModelAdmin):
 	list_display = ('__str__', 'getType')
 	prepopulated_fields = {"slug": ("name",)}
+	fields = ['name', 'type', 'short_description','banner_image',
+			'long_description','person','slug',]
 
 class RelatedLinkAdmin(OrderedModelAdmin):
 	list_display = ('text', 'url', 'reorder')
 
 class ResourceAdmin(OrderedModelAdmin):
 	list_display = ('title', 'url', 'reorder')
+	fields = ['title', 'icon', 'url', 'desc',]
 
 admin_site = MyAdminSite(name='myadmin')
 admin_site.register(User, UserAdmin)

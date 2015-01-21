@@ -36,13 +36,32 @@
         
         <h2>Research Interests</h2>
         
+        <div class="campl-content-container">
+            {{ person.research_interests|safe }} 
+        </div>
         
-        
+        {% if projects %}
         <h2>Research Projects</h2>
 
+        <div class="campl-content-container">
+            {% for p in projects %}
+                <div class="campl-listing-item clearfix">
+                    <p class="campl-listing-title">
+                        <a href="{% url 'labdata:project' p.area p.slug %}">{{ p.name }}</a>
+                    </p>
+                    <p>
+                        {{ p.short_description }}
+                    </p>
+                    <a class="campl-secondary-cta campl-float-right" href="{% url 'labdata:project' p.area p.slug %}">Read More</a>
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
         
-        
+        {% if publications %} 
         <h2>Publications</h2>
+
+        {% endif %}
     </div>
    
 {% endblock %}

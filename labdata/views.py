@@ -16,7 +16,6 @@ def home(request):
 	return render(request, 'home.html', {'flatpage': fp})
 
 def projects(request, area):
-	print("Projects")
 	if area == None:
 		projects = Project.objects.all()
 	elif area == 'toxo':
@@ -73,4 +72,6 @@ def person(request, slug):
 		'people': people,
 		'show_links': False,
 		'person': person,
+		'projects': person.project_set.all(),
+		'publications': person.publication_set.all(),
 	})

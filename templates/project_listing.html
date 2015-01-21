@@ -1,0 +1,10 @@
+
+<div class="campl-listing-item clearfix">
+    <p class="campl-listing-title">
+        <a href="{% url 'labdata:project' project.area project.slug %}">{{ project.name }}</a>
+    </p>
+    <p>
+        {{ project.short_description }}
+    </p>
+    <a class="campl-secondary-cta campl-float-right" href="{% url 'labdata:project' project.area project.slug %}">Read More</a>
+</div>
