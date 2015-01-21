@@ -3,6 +3,13 @@ import urllib.parse
 from tinymce import models as tinymce_models
 from orderedmodel import OrderedModel
 
+TYPE_CHOICES = {
+		's': 'Synbio',
+		't': 'Toxoplasma',
+		'o': 'Other',
+}
+
+
 class Person(models.Model):
 	class Meta:
 		verbose_name_plural = 'People'
@@ -58,11 +65,6 @@ class Person(models.Model):
 		return self.fullName();
 
 class Project(models.Model):
-	TYPE_CHOICES = {
-			's': 'Synbio',
-			't': 'Toxoplasma',
-			'o': 'Other',
-		}
 	name = models.CharField(max_length=256)
 	type = models.CharField(max_length=1, choices=list(TYPE_CHOICES.items()))
 	short_description = models.CharField(max_length=512)
@@ -71,7 +73,7 @@ class Project(models.Model):
 	slug = models.SlugField(unique=True)
 
 	def getType(self):
-		return self.TYPE_CHOICES[self.type]
+		return TYPE_CHOICES[self.type]
 	getType.short_description = "Type"
 
 	def area(self):
@@ -104,12 +106,7 @@ class Resource(OrderedModel):
 
 
 class Publication(models.Model):
-	TYPE_CHOICES = {
-			's': 'Synbio',
-			't': 'Toxoplasma',
-			'o': 'Other',
-		}
-
+	"""Lab publications"""
 	title = models.CharField(max_length=512)
 	date = models.DateField()
 	journal = models.CharField(max_length=128)
@@ -119,5 +116,28 @@ class Publication(models.Model):
 	people = models.ManyToManyField(person)
 	type = models.CharField(max_length=1, choices=list(TYPE_CHOICES.items()))
 	document = models.FileField(blank=True)
+
+class Funding(models.Model):
+	"""Lab funding"""
+	#Funding body
+	funding_body_name = models.CharField(max_length=128)
+	funding_body_url = models.URLField()
+	funding_body_logo = models.ImageField(blank=True)
+
+	#Grant info
+	grant_title = models.CharField(max_length=256)
+	grant_PIs = models.ManyToManyField(person)
+	grant_coinvestigators = models.ManyToManyField(person)
+	grant_description = tinymce_models.HTMLField()
+	grant_date = models.DateField()
+	grant_more_info = models.UrlField()
+
+class NewsItem(models.Model):
+	"""News from the lab"""
+	pub_date = models.DateField()
+	title = models.CharField(max_length=512)
+	banner_image = models.ImageField(blank=True)
+	content = tinymce_models.HTMLField()
+	show_on_homepage = models.BooleanField(default=True)
 
 
