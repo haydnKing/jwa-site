@@ -140,4 +140,6 @@ class NewsItem(models.Model):
 	content = tinymce_models.HTMLField()
 	show_on_homepage = models.BooleanField(default=True)
 
+	slug = models.SlugField(unique=True)
+
 
