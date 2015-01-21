@@ -110,10 +110,10 @@ class Publication(models.Model):
 	title = models.CharField(max_length=512)
 	date = models.DateField()
 	journal = models.CharField(max_length=128)
-	link = models.UrlField()
+	link = models.URLField()
 
 	abstract = models.TextField()
-	people = models.ManyToManyField(person)
+	people = models.ManyToManyField(Person)
 	type = models.CharField(max_length=1, choices=list(TYPE_CHOICES.items()))
 	document = models.FileField(blank=True)
 
@@ -126,11 +126,11 @@ class Funding(models.Model):
 
 	#Grant info
 	grant_title = models.CharField(max_length=256)
-	grant_PIs = models.ManyToManyField(person)
-	grant_coinvestigators = models.ManyToManyField(person)
+	grant_PIs = models.ManyToManyField(Person)
+	grant_coinvestigators = models.ManyToManyField(Person)
 	grant_description = tinymce_models.HTMLField()
 	grant_date = models.DateField()
-	grant_more_info = models.UrlField()
+	grant_more_info = models.URLField()
 
 class NewsItem(models.Model):
 	"""News from the lab"""
