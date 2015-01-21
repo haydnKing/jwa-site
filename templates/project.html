@@ -1,13 +1,40 @@
-{% extends "projects.html" %}
+{% extends "content.html" %}
 {% load staticfiles %}
 
 {% block subtitle %}Projects : {{project.name}}{% endblock %} 
 
-{% block extracrumbs %}
-    <li><a href="{% url 'labdata:project' project.area project.slug %}">{{ project.name }}</a></li>
+{% block breadcrumbs %}
+    <li><a href="{% url 'labdata:projects' %}">
+        {{ subtitle|title }}
+    </a></li>
+    <li><a href="{% url 'labdata:project' project.slug %}">
+        {{ project.name }}
+    </a></li>
+{% endblock %}
+
+{% block vbreadcrumbs %}
+<li>
+    <a href="{% url 'labdata:'|add:subtitle %}">
+        Projects
+        <span class="campl-vertical-breadcrumb-indicator"></span>
+    </a>
+</li>
 {% endblock %}
 
 
+{% block localnav %}
+    <li class="campl-selected">
+        <a href="{% url 'labdata:projects' %}#{{ project.area }}">
+            {{ project.longArea }}
+        </a>
+        <ul class="campl-unstyled-list campl-vertical-breadcrumb-children">
+            {% for p in projects %}
+            <li><a href="{% url 'labdata:project' p.slug %}">
+                {{ p.name }}
+            </a></li>
+            {% endfor %}
+        </ul>
+{% endblock %}
 
 {% block maincontent %}
     {% if project.banner_image %}

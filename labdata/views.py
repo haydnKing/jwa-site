@@ -15,40 +15,24 @@ def home(request):
 	fp = get_object_or_404(FlatPage, title="Home")
 	return render(request, 'home.html', {'flatpage': fp})
 
-def projects(request, area):
-	if area == None:
-		projects = Project.objects.all()
-	elif area == 'toxo':
-		projects = Project.objects.filter(type='t')
-	elif area == 'synbio':
-		projects = Project.objects.filter(type='s')
-	elif area == 'other':
-		projects = Project.objects.filter(type='o')
-
+def projects(request):
 	return render(request, 'projects.html', {
-		'projects': projects.order_by('name'),
-		'area': area,
+		'synbio': Project.objects.filter(type='s').order_by('name'),
+		'toxo':   Project.objects.filter(type='t').order_by('name'),
+		'other':  Project.objects.filter(type='o').order_by('name'),
 		'show_links': True,
 		'subtitle': 'projects',
 	})
 
-def project(request, area, slug):
+def project(request, slug):
 	"""Project detail page"""
-	print("Project")
-	if area == 'toxo':
-		a='t'
-	elif area == 'synbio':
-		a='s'
-	elif area == 'other':
-		a='o'
 
-	project = get_object_or_404(Project, slug=slug, type=a)
+	project = get_object_or_404(Project, slug=slug)
 	ctx = {
 				'title': 'Ajioka Lab',
 				'subtitle': 'projects',
 				'project': project,
 				'projects': Project.objects.filter(type=project.type).order_by('name'),
-				'area': area,
 				'show_links': False,
 	}
 

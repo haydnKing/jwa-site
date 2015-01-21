@@ -8,6 +8,11 @@ TYPE_CHOICES = {
 		't': 'Toxoplasma',
 		'o': 'Other',
 }
+LONG_TYPES = {
+		's': 'Synthetic Biology',
+		't': 'Toxoplasma Gondii',
+		'o': 'Other',
+}
 
 
 class Person(models.Model):
@@ -93,6 +98,9 @@ class Project(models.Model):
 		elif self.type == 't':
 			return 'toxo'
 		return 'other'
+
+	def longArea(self):
+		return LONG_TYPES[self.type]
 
 	def __str__(self):
 		return self.name

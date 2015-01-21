@@ -1,26 +1,31 @@
 {% extends "area.html" %}
 {% load staticfiles %}
 
-{% block subtitle %}Projects{% endblock %}
-
-{% block localnav_items %}
-    {% for p in projects %}
-        <li><a href="{% url 'labdata:project' area p.slug %}">{{p.name}}</a></li>
-    {% endfor %}
-{% endblock %}
-
 
 {% block maincontent %}
     <img src="{% static 'images/content/recessed-image-placeholder.jpg' %}" alt="" class="campl-scale-with-grid" />
 
     <div class="campl-content-container">
-        <h3>Synthetic Biology</h3>
-        {% for p in projects %}
-            {% include 'project_listing.html' with project=p only %}
-        {% endfor %}
-        <h3>Toxoplasma Gondii</h3>
+        <h2 id='synbio'>Synthetic Biology</h2>
+        <div class="campl-content-container">
+            {% for p in synbio %}
+                {% include 'project_listing.html' with project=p only %}
+            {% endfor %}
+        </div>
 
-        <h3>Other Projects</h3>
+        <h2 id='toxo'>Toxoplasma Gondii</h2>
+        <div class="campl-content-container">
+            {% for p in toxo %}
+                {% include 'project_listing.html' with project=p only %}
+            {% endfor %}
+        </div>
+
+        <h2 id='other'>Other Projects</h2>
+        <div class="campl-content-container">
+            {% for p in other %}
+                {% include 'project_listing.html' with project=p only %}
+            {% endfor %}
+        </div>
 
     </div>
 {% endblock %}
