@@ -116,6 +116,7 @@ class RelatedLink(OrderedModel):
 class Resource(OrderedModel):
 	"""A list of useful resources - more complete than the related links"""
 	title = models.CharField(max_length=64)
+	type = models.CharField(max_length=1, choices=list(TYPE_CHOICES.items()))
 	desc = models.TextField(verbose_name="description")
 	url = models.URLField()
 	icon = models.ImageField(blank=True)
@@ -127,12 +128,14 @@ class Resource(OrderedModel):
 class Publication(models.Model):
 	"""Lab publications"""
 	title = models.CharField(max_length=512)
+	authors = models.CharField(max_length=512, 
+		help_text="All authors listed on the paper (used for citations)")
 	date = models.DateField()
 	journal = models.CharField(max_length=128)
 	link = models.URLField()
 
-	abstract = models.TextField()
-	people = models.ManyToManyField(Person)
+	people = models.ManyToManyField(Person, 
+			help_text="Lab contibutors (a citation will appear on	their page).")
 	type = models.CharField(max_length=1, choices=list(TYPE_CHOICES.items()))
 	document = models.FileField(blank=True)
 

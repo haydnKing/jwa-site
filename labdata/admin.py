@@ -1,5 +1,5 @@
 from django.contrib import admin
-from labdata.models import Person, Project, RelatedLink, Resource
+from labdata.models import Person, Project, RelatedLink, Resource, Publication
 
 from django.contrib.auth.admin import UserAdmin, GroupAdmin
 from django.contrib.auth.models import User, Group
@@ -29,7 +29,13 @@ class RelatedLinkAdmin(OrderedModelAdmin):
 
 class ResourceAdmin(OrderedModelAdmin):
 	list_display = ('title', 'url', 'reorder')
-	fields = ['title', 'icon', 'url', 'desc',]
+	fields = ['title', 'type', 'icon', 'url', 'desc',]
+
+class PublicationAdmin(admin.ModelAdmin):
+	list_display = ('title', 'date')
+
+	fields = ['type', 'title', 'authors', 'journal', 'date',
+			'link', 'people', 'document',]
 
 admin_site = MyAdminSite(name='myadmin')
 admin_site.register(User, UserAdmin)
@@ -38,6 +44,7 @@ admin_site.register(Person, PersonAdmin)
 admin_site.register(Project, ProjectAdmin)
 admin_site.register(RelatedLink, RelatedLinkAdmin)
 admin_site.register(Resource, ResourceAdmin)
+admin_site.register(Publication, PublicationAdmin)
 
 admin_site.register(FlatPage, FlatPageAdmin)
 

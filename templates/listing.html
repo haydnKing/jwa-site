@@ -3,27 +3,27 @@
 
 
 {% block maincontent %}
-    <img src="{% static 'images/content/recessed-image-placeholder.jpg' %}" alt="" class="campl-scale-with-grid" />
+<img src="{% static 'images/content/'|add:subtitle|add:'-header.jpg' %}" alt="" class="campl-scale-with-grid" />
 
     <div class="campl-content-container">
         <h2 id='synbio'>Synthetic Biology</h2>
         <div class="campl-content-container">
-            {% for p in synbio %}
-                {% include 'project_listing.html' with project=p only %}
+            {% for r in synbio %}
+                {% include listing_template with arg=r only %}
             {% endfor %}
         </div>
 
         <h2 id='toxo'>Toxoplasma Gondii</h2>
         <div class="campl-content-container">
-            {% for p in toxo %}
-                {% include 'project_listing.html' with project=p only %}
+            {% for r in toxo %}
+                {% include listing_template with arg=r only %}
             {% endfor %}
         </div>
 
-        <h2 id='other'>Other Projects</h2>
+        <h2 id='other'>Other Resources</h2>
         <div class="campl-content-container">
-            {% for p in other %}
-                {% include 'project_listing.html' with project=p only %}
+            {% for r in other %}
+                {% include listing_template with arg=r only %}
             {% endfor %}
         </div>
 

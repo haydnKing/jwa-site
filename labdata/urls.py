@@ -12,6 +12,8 @@ urlpatterns = patterns('',
 			name='project'),
 		url(r'^people/$', views.people, name='people'),
 		url(r'^people/(?P<slug>[\w-]+)/$', views.person, name='person'),
+		url(r'^resources/$', views.resources, name='resources'),
+		url(r'^publications/$', views.publications, name='publications'),
 	)
  
 urlpatterns += patterns('django.contrib.flatpages.views',

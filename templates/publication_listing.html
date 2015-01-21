@@ -1,0 +1,13 @@
+<div class="campl-listing-item campl-search-listing clearfix">
+    <p>
+        <a href="{{arg.link}}">
+            {{ arg.title }}
+        </a>
+        {{ arg.authors }}
+        <a href="{{ arg.link }}">{{ arg.link }}</a>
+        {% if arg.document %}
+        <a href="{{ arg.document.url}}">Download</a>
+        {% endif %}
+    </p>
+    <span class="campl-datestamp">{{ arg.date }}</span>
+</div>

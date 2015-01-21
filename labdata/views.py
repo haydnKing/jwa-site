@@ -4,7 +4,7 @@ from django.http import Http404
 
 from django.contrib.flatpages.models import FlatPage
 
-from labdata.models import Project, Person, RelatedLink, Resource
+from labdata.models import Project, Person, RelatedLink, Resource, Publication
 
 def render(request, template, context):
 	context['related_links'] = RelatedLink.objects.all().order_by('order')
@@ -16,12 +16,13 @@ def home(request):
 	return render(request, 'home.html', {'flatpage': fp})
 
 def projects(request):
-	return render(request, 'projects.html', {
+	return render(request, 'listing.html', {
 		'synbio': Project.objects.filter(type='s').order_by('name'),
 		'toxo':   Project.objects.filter(type='t').order_by('name'),
 		'other':  Project.objects.filter(type='o').order_by('name'),
 		'show_links': True,
 		'subtitle': 'projects',
+		'listing_template': 'project_listing.html',
 	})
 
 def project(request, slug):
@@ -59,3 +60,21 @@ def person(request, slug):
 		'projects': person.project_set.all(),
 		'publications': person.publication_set.all(),
 	})
+
+def resources(request):
+	return render(request, 'listing.html', {
+		'synbio': Resource.objects.filter(type='s'),
+		'toxo':   Resource.objects.filter(type='t'),
+		'other':  Resource.objects.filter(type='o'),
+		'subtitle': 'resources',
+		'listing_template': 'resource_listing.html',
+		})
+
+def publications(request):
+	return render(request, 'listing.html', {
+		'synbio': Publication.objects.filter(type='s'),
+		'toxo':   Publication.objects.filter(type='t'),
+		'other':  Publication.objects.filter(type='o'),
+		'subtitle': 'publications',
+		'listing_template': 'publication_listing.html',
+		})

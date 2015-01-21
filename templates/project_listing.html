@@ -1,10 +1,10 @@
 <div class="campl-listing-item clearfix">
     <p class="campl-listing-title">
-        <a href="{% url 'labdata:project' project.slug %}">
-            {{ project.name }}
+        <a href="{% url 'labdata:project' arg.slug %}">
+            {{ arg.name }}
         </a>
     </p>
     <p>
-        {{ project.short_description }}
+        {{ arg.short_description }}
     </p>
 </div>
