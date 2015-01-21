@@ -49,11 +49,12 @@ class Person(models.Model):
 			help_text="The person's main role")
 	bio = models.TextField(blank=True,
 			help_text="Short background about the person")
-	mug_shot = models.ImageField(blank=True,
+	mug_shot = models.ImageField(blank=True, upload_to="mugshots/",
 			help_text="Optional mug shot")
 	email = models.EmailField(blank=True,
 			help_text="Contact email - if completed this will be publically available")
-	slug = models.SlugField(unique=True)
+	slug = models.SlugField(unique=True, 
+		help_text="This text must uniquely identify the person in the database")
 	current = models.BooleanField(default=True, 
 			verbose_name="Current Lab Member",
 			help_text="Is this person a current member of the lab?")

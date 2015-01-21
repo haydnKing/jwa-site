@@ -15,6 +15,8 @@ class MyAdminSite(admin.AdminSite):
 class PersonAdmin(admin.ModelAdmin):
 	list_display = ('__str__', 'getRole')
 	prepopulated_fields = {"slug": ("name",)}
+	fields = ["title", "name", "role", "current", "email", "mug_shot", 
+			"bio", "slug"]
 
 class ProjectAdmin(admin.ModelAdmin):
 	list_display = ('__str__', 'getType')

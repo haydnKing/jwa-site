@@ -10,102 +10,40 @@
 {% block maincontent %}
     <div class="campl-content-container">
         <h1>{{ person.fullName }}</h1>
+        <h5>{{ person.getRole }}</h5>
         <div class="campl-listing-item profile-listing clearfix">
             <div class="campl-content-container">
                 <div class="campl-column9">
                     <div class="campl-content-container campl-listing-txt">
-                        <p>{{ person.getRole }}</p>
+                        <p>{{ person.bio }}</p>
+                        {% if person.email %}
                         <p>Email: <a href="mailto:{{ person.email }}">{{person.email}}</a></p>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="campl-column3">
                     <div class="campl-content-container campl-listing-img">
-                        <img alt=""  src="{% static 'images/content/profile-01.jpg'%}" class="campl-scale-with-grid" />
+                    {% if person.mug_shot %}
+                        <img alt=""  src="{{ person.mug_shot.url }}" class="campl-scale-with-grid" />
+                    {% else %}
+                        <img alt=""  src="{% static 'images/content/profile-placeholder.jpg' %}" class="campl-scale-with-grid" />
+                    {% endif %}
                     </div>
                 </div>
             </div>
         </div>
         
-        <h2>Contact Information</h2>
-        <p><a href="" class="campl-btn-download-vcard campl-primary-cta" ><span class="campl-download-arrow">Download vCard</span></a>
-        
-        <p class="campl-break-word">Telephone: +44 (0)1223(3)37147 <br />
-        Email: <a href="">pma32@cam.ac.uk</a> <br />
-        Publications: <a href="">https://sites.google.com/site/philallmendinger/home</a></p>
-        
         
         <h2>Research Interests</h2>
         
-        <ul>
-            <li>Planning Theory and Practice</li>
-            <li>Governance and Regional Planning</li>
-            <li>Development and planning regulation</li>
-        </ul>
-        <p>Phil Allmendinger has published extensively in the areas of property and planning, planning theory, policy and practice, 
-            land and property regulation, housing and local government. His research thus spans across several of the Department‘s interests, 
-            especially in planning, property and housing. Professor Allmendinger is a chartered planner and surveyor. He initially trained as 
-            a spatial planner and has also worked in local government. He is a member of the Economic and Social Research Council Research 
-            Grants Board and a member of the Communities and Local Government Housing Markets</p>
         
         
-        
-        <h2>Recent Research projects</h2>
-        <p>Soft spaces, spatial planning and territorial management in Europe (with Hamburg, Manchester, Delft and Sorbonne Universities) (2011 - 2013)</p>
+        <h2>Research Projects</h2>
 
-        <p>Health and Safety Executive (HSE) Economic Costs of Land Use Restrictions around Major Hazard Sites (with NLP) (2010)</p>
-
-        <p>RICS: Transaction Costs, Planning and Housing Supply. June 2008 – June 2009.</p>
-
-        <p>CLG: Market Information and Planning for Economic Development. June – July 2008.</p>
-
-        <p>ESRC: Housing Supply and Planning Delay (with Professor Michael Ball, University of Reading). 2006-2008.</p>
-
-        <p>ESRC: Integrated Spatial Planning, Multi-level Governance and State Rescaling (with Professor Graham Haughton of the University of Hull, Dr. Dave Counsell of the University of Cork and Dr. Geoff Vigar, University of Newcastle). January 2005-December 2007</p>
-
-        <p>ODPM: Future Direction of Mobile Phone and Electronic Communications Network Technology (with Arup). 2006</p>
-        <p>RICS Foundation: The ‘Fourth Way’: Partnership Based Alternatives to Development Control in UK Planning. 2007</p>
-
-        <p>ODPM: Rethinking the Planning Regulation of Land and Property Markets (with Professor Michael Ball) (2005-2006).</p>
-        
         
         
         <h2>Publications</h2>
-        <p>Allmendinger, P. and Haughton, G. (2012) Post-political Spatial Planning in England: A Crisis of Consensus? Transactions of the Institute of British Geographers, 37(1): 89-103</p>
-
-        <p>Allmendinger. P (2011) New Labour and Planning. From New Right to New Left, Routledge</p>
-
-        <p>Haughton, G. and Allmendinger, P. (2010) Spatial Planning, Devolution and New Planning Spaces, Environment and Planning C, Government and Policy, 28(5):  803-818</p>
-
-        <p>Allmendinger, P. and Haughton, G. (2010) Critical Reflection on Spatial Planning, Environment and Planning A, 41: 2544-2549</p>
-
-        <p>Allmendinger, P. and Haughton, G. (2009) Soft spaces, fuzzy boundaries and metagovernance: the new spatial planning in the Thames Gateway, Environment and Planning A, 41: 617 - 633</p> 
-
-        <p>Haughton, G, Allmendinger, P., Counsell, D. and Vigar, G (2009) Integrated Spatial Planning, Devolution and Governance in the British Isles, Routledge</p>
-
-        <p>Allmendinger, P. (2009) Planning Theory (2nd Edition), Palgrave</p>
-
-        <p>Tewdwr-Jones, M. and Allmendinger, P. (2006) Territory, Identity and Space: Planning in a Disunited Kingdom, Routledge</p>
-
-        <p>Allmendinger, P. &amp; Ball, M. Explaining the Paradox of Performance Improvements and Delay in Development Control, Urban Design and Planning (accepted and awaiting publication).</p>
-
     </div>
-    <div class="campl-content-container">
-        <div class="campl-heading-container">
-            <h2 class="campl-light-heading">Share this</h2>
-        </div>
-    </div>
-    <div class="campl-content-container campl-no-top-padding">
-        <!-- AddThis Button BEGIN -->
-        <div class="addthis_toolbox addthis_default_style ">
-        <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-        <a class="addthis_button_tweet"></a>
-        <a class="addthis_button_pinterest_pinit"></a>
-        <a class="addthis_counter addthis_pill_style"></a>
-        </div>
-        <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
-        <script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-504f0d4e41e30623"></script>
-        <!-- AddThis Button END -->
-    </div>
-
+   
 {% endblock %}
 
