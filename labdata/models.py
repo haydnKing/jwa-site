@@ -126,8 +126,9 @@ class Funding(models.Model):
 
 	#Grant info
 	grant_title = models.CharField(max_length=256)
-	grant_PIs = models.ManyToManyField(Person)
-	grant_coinvestigators = models.ManyToManyField(Person)
+	grant_PIs = models.ManyToManyField(Person, related_name="Funding_PI")
+	grant_coinvestigators = models.ManyToManyField(Person, 
+		related_name="Funding_CI")
 	grant_description = tinymce_models.HTMLField()
 	grant_date = models.DateField()
 	grant_more_info = models.URLField()
