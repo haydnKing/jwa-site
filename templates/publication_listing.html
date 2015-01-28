@@ -11,8 +11,13 @@
 
 {% for r in arg %}
     <tr>
-        <td><a href="{{r.link}}">{{ r.title }}</a></td>
-        <td>{{ r.date }}</td>
+        <td>
+            <a href="{{r.link}}">{{ r.title }}</a>
+            {% if r.document %}
+            (<a href="{{r.document.url}}">download</a>)
+            {% endif %}
+        </td>
+        <td>{{ r.date.year }}</td>
         <td>{{ r.journal }}</td>
         <td>{{ r.authors }}</td>
     </tr>
