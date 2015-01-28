@@ -8,24 +8,20 @@
     <div class="campl-content-container">
         <h2 id='synbio'>Synthetic Biology</h2>
         <div class="campl-content-container">
-            {% for r in synbio %}
-                {% include listing_template with arg=r only %}
-            {% endfor %}
+            {% include listing_template with arg=synbio only %}
         </div>
 
         <h2 id='toxo'>Toxoplasma Gondii</h2>
         <div class="campl-content-container">
-            {% for r in toxo %}
-                {% include listing_template with arg=r only %}
-            {% endfor %}
+            {% include listing_template with arg=toxo only %}
         </div>
 
-        <h2 id='other'>Other Resources</h2>
+    {% if other %}
+        <h2 id='other'>Other {{subtitle | title}}</h2>
         <div class="campl-content-container">
-            {% for r in other %}
-                {% include listing_template with arg=r only %}
-            {% endfor %}
+                {% include listing_template with arg=other only %}
         </div>
+    {% endif %}
 
     </div>
 {% endblock %}
