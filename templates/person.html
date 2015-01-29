@@ -60,6 +60,7 @@
         
         {% if publications %} 
         <h2>Publications</h2>
+            {% include "publication_listing.html" with arg=publications only %}
 
         {% endif %}
     </div>

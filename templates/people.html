@@ -24,21 +24,14 @@
 {% endblock %}
 
 {% block maincontent %}
-    <img src="{% static 'images/content/recessed-image-placeholder.jpg' %}" alt="" class="campl-scale-with-grid" />
+    <img src="{% static 'images/content/people-header.jpg' %}" alt="" class="campl-scale-with-grid" />
 
     <div class="campl-content-container">
         {% for role,peeps in people_by_role %}
             {% if peeps %}
                 <h3>{{ role }}</h3>
                 <div class="campl-content-container">
-                    {% for p in peeps %}
-                        <div class="campl-listing-item clearfix">
-                            <p class="campl-listing-title">
-                                <a href="{% url 'labdata:person' p.slug %}">{{ p.name }}</a>
-                            </p>
-                            <a class="campl-secondary-cta campl-float-right" href="{% url 'labdata:person' p.slug %}">Read More</a>
-                        </div>
-                    {% endfor %}
+                    {% include "people_listing.html" with arg=peeps %} 
                 </div>
             {% endif %}
         {% endfor %}

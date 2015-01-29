@@ -143,8 +143,8 @@ class Funding(models.Model):
 	"""Lab funding"""
 	#Funding body
 	funding_body_name = models.CharField(max_length=128)
-	funding_body_url = models.URLField()
-	funding_body_logo = models.ImageField(blank=True)
+	funding_body_url = models.URLField(blank=True)
+	funding_body_logo = models.ImageField()
 
 	#Grant info
 	grant_title = models.CharField(max_length=256)
@@ -152,8 +152,7 @@ class Funding(models.Model):
 	grant_coinvestigators = models.ManyToManyField(Person, 
 		related_name="Funding_CI")
 	grant_description = tinymce_models.HTMLField()
-	grant_date = models.DateField()
-	grant_more_info = models.URLField()
+	grant_more_info = models.URLField(blank=True)
 
 class NewsItem(models.Model):
 	"""News from the lab"""

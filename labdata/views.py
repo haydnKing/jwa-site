@@ -45,7 +45,7 @@ def people(request):
 	people_by_role = [(Person.ROLE_CHOICES_PL[r], people.filter(role=r)) for r in roles]
 	return render(request, 'people.html', {
 		'people': people,
-		'show_links': True,
+		'show_links': False,
 		'people_by_role': people_by_role,
 	})
 

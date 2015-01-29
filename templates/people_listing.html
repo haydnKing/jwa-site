@@ -1,0 +1,25 @@
+{% load staticfiles %}
+{% for p in arg %}
+<div class="campl-listing-item clearfix">
+    <div class="campl-column10">
+        <div class="campl-content-container campl-listing-txt">
+            <p class="campl-listing-title">
+                <a href="{% url 'labdata:person' p.slug %}">{{ p.name }}</a>
+            </p>
+            <p>{{ p.bio }}</p>
+            
+            <a class="campl-secondary-cta campl-float-right" href="{% url 'labdata:person' p.slug %}">Read More</a>
+        </div>
+    </div>
+    <div class="campl-column2">
+        <div class="campl-content-container campl-listing-img">
+            {% if p.mug_shot %}
+                <img alt=""  src="{{ p.mug_shot.url }}" class="campl-scale-with-grid" />
+            {% else %}
+                <img alt=""  src="{% static 'images/content/profile-placeholder.jpg' %}" class="campl-scale-with-grid" />
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+
