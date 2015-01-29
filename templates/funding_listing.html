@@ -1,0 +1,19 @@
+<table class='campl-table-bordered campl-table-striped campl-table campl-vertical-stacking-table'>
+    <thead>
+        <tr>
+            <th>Body</th>
+            <th>Title</th>
+        </tr>
+    </thead>
+    <tbody>
+
+{% for r in arg %}
+    <tr>
+        <td>{{ r.funding_body_name }}</td>
+        <td>
+            <a href="#">{{ r.grant_title }}</a>
+        </td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>

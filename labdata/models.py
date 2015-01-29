@@ -36,14 +36,6 @@ class Person(models.Model):
 		'e': 'Collaborator',
 		'f': 'Advisor',
 	}
-	ROLE_CHOICES_PL = {
-		'a': 'Principal Investigator', #Should only be one of these
-		'b': 'Postdoctorial Researchers',
-		'c': 'Graduate Students',
-		'd': 'Undergraduate Students',
-		'e': 'Collaborators',
-		'f': 'Advisors',
-	}
 
 	name = models.CharField(max_length=512, 
 			help_text="The person's full name")
@@ -142,17 +134,29 @@ class Publication(models.Model):
 class Funding(models.Model):
 	"""Lab funding"""
 	#Funding body
-	funding_body_name = models.CharField(max_length=128)
-	funding_body_url = models.URLField(blank=True)
-	funding_body_logo = models.ImageField()
+	funding_body_name = models.CharField(max_length=128,
+			verbose_name='Name')
+	funding_body_url = models.URLField(blank=True,
+			verbose_name='URL')
+	funding_body_logo = models.ImageField(
+			verbose_name='logo')
 
 	#Grant info
-	grant_title = models.CharField(max_length=256)
-	grant_PIs = models.ManyToManyField(Person, related_name="Funding_PI")
+	grant_title = models.CharField(max_length=256,
+			verbose_name='Title')
+	grant_PIs = models.ManyToManyField(Person, related_name="Funding_PI",
+			verbose_name='Principal Investigator(s)')
 	grant_coinvestigators = models.ManyToManyField(Person, 
-		related_name="Funding_CI")
-	grant_description = tinymce_models.HTMLField()
-	grant_more_info = models.URLField(blank=True)
+		related_name="Funding_CI",
+		verbose_name="Co-Investigators")
+	grant_description = tinymce_models.HTMLField(
+			verbose_name="Description")
+	grant_more_info = models.URLField(blank=True,
+			verbose_name="More Info (URL)")
+
+	class Meta:
+		verbose_name_plural = 'Funding items'
+		verbose_name = 'Funding item'
 
 class NewsItem(models.Model):
 	"""News from the lab"""

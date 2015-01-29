@@ -41,7 +41,7 @@ class FundingAdmin(admin.ModelAdmin):
 	list_display = ('grant_title', 'funding_body_name')
 
 	fieldsets = (
-			('Funding Body',{
+			('Funding Body Information',{
 				'fields': ('funding_body_name', 'funding_body_url',
 					'funding_body_logo'),
 			}),

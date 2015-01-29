@@ -4,7 +4,7 @@ from django.http import Http404
 
 from django.contrib.flatpages.models import FlatPage
 
-from labdata.models import Project, Person, RelatedLink, Resource, Publication
+from labdata.models import *
 
 def render(request, template, context):
 	context['related_links'] = RelatedLink.objects.all().order_by('order')
@@ -15,16 +15,114 @@ def home(request):
 	fp = get_object_or_404(FlatPage, title="Home")
 	return render(request, 'home.html', {'flatpage': fp})
 
+# --------------------- LISTING PAGES -----------
+SB = 'Synthetic Biology'
+SBi = 'synbio'
+TX = 'Toxoplasma Gondii'
+TXi = 'toxo'
+OT = 'Other'
+OTi = 'other'
 def projects(request):
 	return render(request, 'listing.html', {
-		'synbio': Project.objects.filter(type='s').order_by('name'),
-		'toxo':   Project.objects.filter(type='t').order_by('name'),
-		'other':  Project.objects.filter(type='o').order_by('name'),
+		'items': [
+			{
+				'title': SB,
+				'id': SBi,
+				'objects': Project.objects.filter(type='s').order_by('name'),
+			},{
+				'title': TX,
+				'id': TXi,
+				'objects': Project.objects.filter(type='t').order_by('name'),
+			},{
+				'title': OT,
+				'id': OTi,
+				'objects': Project.objects.filter(type='o').order_by('name'),
+			},
+		],
 		'show_links': True,
 		'subtitle': 'projects',
 		'listing_template': 'project_listing.html',
 	})
 
+def resources(request):
+	return render(request, 'listing.html', {
+		'items': [
+			{
+				'title': SB,
+				'id': SBi,
+				'objects': Resource.objects.filter(type='s'),
+			},{
+				'title': TX,
+				'id': TXi,
+				'objects': Resource.objects.filter(type='t'),
+			},{
+				'title': OT,
+				'id': OTi,
+				'objects': Resource.objects.filter(type='o'),
+			},
+		],
+		'subtitle': 'resources',
+		'listing_template': 'resource_listing.html',
+		})
+
+
+def funding(request):
+	return render(request, 'listing.html', {
+		'items': [
+			{
+				'title': None,
+				'objects': Funding.objects.all().order_by('grant_title'),
+			},
+		],
+		'subtitle': 'funding',
+		'listing_template': 'funding_listing.html',
+		})
+
+
+def publications(request):
+	return render(request, 'listing.html', {
+		'items': [
+			{
+				'title': SB,
+				'id': SBi,
+				'objects': Publication.objects.filter(type='s'),
+			},{
+				'title': TX,
+				'id': TXi,
+				'objects': Publication.objects.filter(type='t'),
+			},{
+				'title': OT,
+				'id': OTi,
+				'objects': Publication.objects.filter(type='o'),
+			},
+		],
+		'subtitle': 'publications',
+		'listing_template': 'publication_listing.html',
+		})
+
+ROLE_CHOICES_PL = (
+	('a', 'Principal Investigator', 'PI'), #Should only be one of these
+	('b', 'Postdoctorial Researchers', 'postdocs'),
+	('c', 'Graduate Students', 'grads'),
+	('d', 'Undergraduate Students', 'undergrads'),
+	('e', 'Collaborators', 'collaborators'),
+	('f', 'Advisors', 'advisors'),
+)
+def people(request):
+	people = Person.objects.all().order_by('name')
+	items = [{
+		'title': title,
+		'id': id_,
+		'objects': people.filter(role=r),
+	} for r,title,id_ in ROLE_CHOICES_PL]
+
+	return render(request, 'listing.html', {
+		'items': items,
+		'subtitle': 'people',
+		'listing_template': 'people_listing.html',
+	})
+
+#-------------- SINGLE PAGES
 def project(request, slug):
 	"""Project detail page"""
 
@@ -39,16 +137,6 @@ def project(request, slug):
 
 	return render(request, 'project.html', ctx)
 
-def people(request):
-	people = Person.objects.all().order_by('name')
-	roles = ['a','b','c','d','e','f',]
-	people_by_role = [(Person.ROLE_CHOICES_PL[r], people.filter(role=r)) for r in roles]
-	return render(request, 'people.html', {
-		'people': people,
-		'show_links': False,
-		'people_by_role': people_by_role,
-	})
-
 def person(request, slug):
 	people = Person.objects.all().order_by('name')
 	person = people.get(slug=slug)
@@ -61,20 +149,10 @@ def person(request, slug):
 		'publications': person.publication_set.all(),
 	})
 
-def resources(request):
-	return render(request, 'listing.html', {
-		'synbio': Resource.objects.filter(type='s'),
-		'toxo':   Resource.objects.filter(type='t'),
-		'other':  Resource.objects.filter(type='o'),
-		'subtitle': 'resources',
-		'listing_template': 'resource_listing.html',
-		})
-
-def publications(request):
-	return render(request, 'listing.html', {
-		'synbio': Publication.objects.filter(type='s'),
-		'toxo':   Publication.objects.filter(type='t'),
-		'other':  Publication.objects.filter(type='o'),
-		'subtitle': 'publications',
-		'listing_template': 'publication_listing.html',
-		})
+def funding_item(request, id):
+	project = get_object_or_404(Funding, id=id)
+	
+	return render(request, 'funding_item.html', {
+		'funding_item': funding_item,
+		'show_links': False,
+	})

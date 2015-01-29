@@ -1,27 +1,45 @@
-{% extends "area.html" %}
+{% extends "content.html" %}
 {% load staticfiles %}
+
+
+{% block subtitle %}{{ subtitle|title }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li><a href="{% url 'labdata:'|add:subtitle %}">
+        {{ subtitle|title }}
+    </a></li>
+{% endblock %}
+
+
+{% block localnav %}
+    <li class="campl-selected">
+        <a href="{% url 'labdata:'|add:subtitle %}">
+            {{ subtitle|title }}
+        </a>
+        <ul class="campl-unstyled-list campl-vertical-breadcrumb-children">
+        {% for item in items %}
+            {% if item.objects %}
+            <li><a href="#{{item.id}}">{{item.title}}</a></li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+{% endblock %}
 
 
 {% block maincontent %}
 <img src="{% static 'images/content/'|add:subtitle|add:'-header.jpg' %}" alt="" class="campl-scale-with-grid" />
 
     <div class="campl-content-container">
-        <h2 id='synbio'>Synthetic Biology</h2>
-        <div class="campl-content-container">
-            {% include listing_template with arg=synbio only %}
-        </div>
-
-        <h2 id='toxo'>Toxoplasma Gondii</h2>
-        <div class="campl-content-container">
-            {% include listing_template with arg=toxo only %}
-        </div>
-
-    {% if other %}
-        <h2 id='other'>Other {{subtitle | title}}</h2>
-        <div class="campl-content-container">
-                {% include listing_template with arg=other only %}
-        </div>
-    {% endif %}
+        {% for item in items %}
+            {% if item.objects %}
+                {% if item.title %}
+                <h2 id='{{item.id}}'>{{item.title}}</h2>
+                {% endif %}
+                <div class="campl-content-container">
+                    {% include listing_template with arg=item.objects only %}
+                </div>
+            {% endif %}
+        {% endfor %}
 
     </div>
 {% endblock %}
