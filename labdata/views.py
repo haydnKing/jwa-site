@@ -109,6 +109,11 @@ def publications(request):
 		'listing_template': 'publication_listing.html',
 		})
 
+def news(request):
+	return render(request, 'news.html', {
+			'items': NewsItem.objects.all().order_by('pub_date'),
+		})
+
 ROLE_CHOICES_PL = (
 	('a', 'Principal Investigator', 'PI'), #Should only be one of these
 	('b', 'Postdoctorial Researchers', 'postdocs'),

@@ -1,0 +1,48 @@
+{% extends "content.html" %}
+{% load staticfiles %}
+
+
+{% block subtitle %}News{% endblock %}
+
+{% block breadcrumbs %}
+    <li><a href="{% url 'labdata:news' %}">
+        News
+    </a></li>
+{% endblock %}
+
+
+{% block localnav %}
+    <li class="campl-selected">
+        <a href="{% url 'labdata:news' %}">
+            News
+        </a>
+        <ul class="campl-unstyled-list campl-vertical-breadcrumb-children">
+        {% for item in items %}
+            {% if item.objects %}
+            <li><a href="#{{item.id}}">{{item.title}}</a></li>
+            {% endif %}
+        {% endfor %}
+            <li><a href="/news/archive">News Archive</a></li>
+        </ul>
+{% endblock %}
+
+
+{% block maincontent %}
+<img src="{% static 'images/content/news-header.jpg' %}" alt="" class="campl-scale-with-grid" />
+
+    <div class="campl-content-container">
+        <!--
+        {% for item in items %}
+            {% if item.objects %}
+                {% if item.title %}
+                <h2 id='{{item.id}}'>{{item.title}}</h2>
+                {% endif %}
+                <div class="campl-content-container">
+                    {% include listing_template with arg=item.objects only %}
+                </div>
+            {% endif %}
+        {% endfor %}
+-->
+    </div>
+{% endblock %}
+

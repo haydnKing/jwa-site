@@ -165,6 +165,7 @@ class NewsItem(models.Model):
 	pub_date = models.DateField()
 	title = models.CharField(max_length=512)
 	banner_image = models.ImageField(blank=True)
+	teaser = models.TextField(help_text="Short version of the news item")
 	content = tinymce_models.HTMLField()
 	show_on_homepage = models.BooleanField(default=True)
 
