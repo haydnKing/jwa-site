@@ -982,7 +982,7 @@ projectlight.markExternalLinks = function(){
 }
 
 //DOM ready 
-$(function() {
+$(document).ready(function() {
 
 	//instantiate all the DOM elements which require javascript rendering
 	projectlight.init();
