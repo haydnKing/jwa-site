@@ -38,7 +38,7 @@ class PublicationAdmin(admin.ModelAdmin):
 			'link', 'people', 'document',]
 
 class FundingAdmin(admin.ModelAdmin):
-	list_display = ('grant_title', 'funding_body_name')
+	list_display = ('grant_title', 'type', 'funding_body_name')
 
 	fieldsets = (
 			('Funding Body Information',{
@@ -46,7 +46,7 @@ class FundingAdmin(admin.ModelAdmin):
 					'funding_body_logo'),
 			}),
 			('Grant Information', {
-				'fields': ('grant_title', 'grant_PIs', 'grant_coinvestigators',
+				'fields': ('grant_title', 'type', 'grant_PIs', 'grant_coinvestigators',
 					'grant_more_info', 'grant_description')
 			}),
 		)

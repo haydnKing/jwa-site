@@ -1,19 +1,54 @@
-<table class='campl-table-bordered campl-table-striped campl-table campl-vertical-stacking-table'>
-    <thead>
-        <tr>
-            <th>Body</th>
-            <th>Title</th>
-        </tr>
-    </thead>
-    <tbody>
 
 {% for r in arg %}
-    <tr>
-        <td>{{ r.funding_body_name }}</td>
-        <td>
-            <a href="#">{{ r.grant_title }}</a>
-        </td>
-    </tr>
+<div class="campl-listing-item clearfix">
+    <div class="campl-column8">
+        <div class="campl-content-container campl-listing-txt">
+            <p class="campl-listing-title">{{ r.grant_title }}</p>
+            <span class="campl-datestamp">
+                <a href="{{ r.funding_body_url}}">{{ r.funding_body_name }}</a>
+            </span>
+            {{ r.grant_description|safe }}
+            {% if r.grant_more_info %}
+            <p><a href="{{ r.grant_more_info }}">More Information</a></p>
+            {% endif %}
+
+            <div class="campl-content-container">
+                <div class="campl-column4">
+                    <h5>Principal Investigator</h5>
+                    <ul class="campl-unstyled-list">
+                        {% for p in r.grant_PIs.all %}
+                        <li>
+                            <a href="{% url "labdata:person" p.slug %}">
+                                {{ p.fullName }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                        </li>
+                    </ul>
+                </div>
+                {% if r.grant_coinvestigators %}
+                <div class="campl-column4">
+                    <h5>Co-Investigator(s)</h5>
+                    <ul class="campl-unstyled-list">
+                        {% for p in r.grant_coinvestigators.all %}
+                        <li>
+                            <a href="{% url "labdata:person" p.slug %}">
+                                {{ p.fullName }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                        </li>
+                    </ul>
+                </div>
+                {% endif %}
+                <div style="clear:both"></div>
+            </div>
+        </div>
+    </div>
+    <div class="campl-column4">
+        <div class="campl-content-container campl-listing-img">
+            <img alt="" src="{{ r.funding_body_logo.url }}" class="campl-scale-with-grid">
+        </div>
+    </div>
+</div>
 {% endfor %}
-    </tbody>
-</table>

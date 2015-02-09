@@ -70,8 +70,17 @@ def funding(request):
 	return render(request, 'listing.html', {
 		'items': [
 			{
-				'title': None,
-				'objects': Funding.objects.all().order_by('grant_title'),
+				'title': SB,
+				'id': SBi,
+				'objects': Funding.objects.filter(type='s'),
+			},{
+				'title': TX,
+				'id': TXi,
+				'objects': Funding.objects.filter(type='t'),
+			},{
+				'title': OT,
+				'id': OTi,
+				'objects': Funding.objects.filter(type='o'),
 			},
 		],
 		'subtitle': 'funding',

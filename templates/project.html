@@ -53,7 +53,8 @@
                 {% for p in project.person.all %}
                 <li><a href="{% url "labdata:person" p.slug %}">{{ p.fullName }}</a></li>
                 {% endfor %}
-            </li>
+                </li>
+            </ul>
     </div>
     
 {% endblock %}
