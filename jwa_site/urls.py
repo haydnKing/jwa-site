@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'jwa_site.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 		url(r'^tinymce/', include('tinymce.urls')),
+		url(r'^mce_filebrowser/', include('mce_filebrowser.urls')),
     url(r'^admin/', include(admin_site.urls)),
 		url(r'', include('labdata.urls', namespace='labdata')),
 )

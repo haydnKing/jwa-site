@@ -1,0 +1,53 @@
+{% extends "content.html" %}
+{% load staticfiles %}
+
+{% block subtitle %}News{% endblock %} 
+
+{% block breadcrumbs %}
+    <li><a href="{% url 'labdata:news' %}">News</a></li>
+    <li><a href="{% url 'labdata:news_item' item.pub_date.year item.pub_date.month item.pub_date.day item.slug %}">{{ item.slug }}</a></li>
+{% endblock %}
+
+{% block vbreadcrumbs %}
+<li>
+    <a href="{% url 'labdata:news' %}">
+        News
+        <span class="campl-vertical-breadcrumb-indicator"></span>
+    </a>
+</li>
+{% endblock %}
+
+
+{% block localnav %}
+    <li class="campl-selected">
+        <a href="{% url 'labdata:news' %}">
+            News
+        </a>
+        <ul class="campl-unstyled-list campl-vertical-breadcrumb-children">
+            {% for n in recent_items %}
+            <li><a href="{% url 'labdata:news_item' n.pub_date.year n.pub_date.month n.pub_date.day n.slug %}">
+                {{ n.title }}
+            </a></li>
+            {% endfor %}
+        </ul>
+{% endblock %}
+
+{% block maincontent %}
+    {% if item.banner_image %}
+    <img src="{{ item.banner_image.url }}" alt="" class="campl-scale-with-grid" />
+    {% else %}
+    <img src="{% static 'images/content/carousel-4.png' %}" alt="" class="campl-scale-with-grid" />
+    {% endif %}
+
+    <div class="campl-content-container">
+        <h2>{{ item.title }}</h2>
+        <span class="campl-datestamp">{{ item.pub_date }}</span>
+
+        <div class='campl-content-container'>
+        {{ item.content|safe }}
+        </div>
+
+    </div>
+    
+{% endblock %}
+

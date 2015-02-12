@@ -17,11 +17,17 @@
             {{ subtitle|title }}
         </a>
         <ul class="campl-unstyled-list campl-vertical-breadcrumb-children">
-        {% for item in items %}
-            {% if item.objects %}
-            <li><a href="#{{item.id}}">{{item.title}}</a></li>
-            {% endif %}
-        {% endfor %}
+        {% if localnav %}
+            {% for l in localnav %}
+                <li><a href="{{l.1}}">{{ l.0 }}</a></li>
+            {% endfor %}
+        {% else %}
+            {% for item in items %}
+                {% if item.objects %}
+                <li><a href="#{{item.id}}">{{item.title}}</a></li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
         </ul>
 {% endblock %}
 

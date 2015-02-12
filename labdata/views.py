@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 import django.shortcuts
 from django.http import Http404
+from django.core.urlresolvers import reverse
 
 from django.contrib.flatpages.models import FlatPage
 
@@ -110,8 +111,24 @@ def publications(request):
 		})
 
 def news(request):
-	return render(request, 'news.html', {
-			'items': NewsItem.objects.all().order_by('pub_date'),
+	obj = NewsItem.objects.all().order_by('-pub_date')[:6]
+	localnav = [(o.title, reverse('labdata:news_item', kwargs = { 
+		'year':  o.pub_date.year, 
+		'month': o.pub_date.month, 
+		'day':   o.pub_date.day, 
+		'slug':  o.slug})) for o in obj]
+	localnav.append(("News Archive", "",))
+	return render(request, 'listing.html', {
+		'items': [
+			{
+				'title': "Latest News",
+				'id': None,
+				'objects': obj,
+			},
+		],
+		'localnav': localnav,
+		'subtitle': 'news',
+		'listing_template': 'news_listing.html',
 		})
 
 ROLE_CHOICES_PL = (
@@ -169,4 +186,17 @@ def funding_item(request, id):
 	return render(request, 'funding_item.html', {
 		'funding_item': funding_item,
 		'show_links': False,
+	})
+
+def news_item(request, year, month, day, slug):
+	year = int(year)
+	month = int(month)
+	day = int(day)
+	date = datetime.date(year, month,day)
+
+	item = get_object_or_404(NewsItem, pub_date=date, slug=slug)
+
+	return render(request, 'news_item.html', {
+		'item': item,
+		'recent_items': NewsItem.objects.all().order_by('-pub_date')[:6],
 	})

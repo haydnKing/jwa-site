@@ -1,0 +1,16 @@
+{% for item in arg %}
+<div class="campl-listing-item campl-search-listing clearfix">
+    <p class="campl-listing-title">
+        <a href="{% url 'labdata:news_item' item.pub_date.year item.pub_date.month item.pub_date.day item.slug %}">
+            {{ item.title }}
+        </a>
+    </p>
+    <span class="campl-datestamp">{{ item.pub_date }}</span>
+    <p>{{ item.teaser}}</p>
+    <p>
+        <a class="campl-secondary-cta campl-float-right" href="">
+            Read More
+        </a>
+    </p>
+</div>
+{% endfor %}

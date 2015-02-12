@@ -1,5 +1,5 @@
 from django.db import models
-import urllib.parse
+import urllib.parse, datetime
 from tinymce import models as tinymce_models
 from orderedmodel import OrderedModel
 
@@ -78,7 +78,8 @@ class Project(models.Model):
 	long_description = tinymce_models.HTMLField()
 	person = models.ManyToManyField(Person)
 	slug = models.SlugField(unique=True)
-	banner_image = models.ImageField(blank=True, upload_to="project_images/")
+	banner_image = models.ImageField(blank=True, upload_to="project_images/",
+			help_text='Should be 900px or more wide')
 
 	def getType(self):
 		return TYPE_CHOICES[self.type]
@@ -162,9 +163,10 @@ class Funding(models.Model):
 
 class NewsItem(models.Model):
 	"""News from the lab"""
-	pub_date = models.DateField()
+	pub_date = models.DateField(default=datetime.date.today)
 	title = models.CharField(max_length=512)
-	banner_image = models.ImageField(blank=True)
+	banner_image = models.ImageField(blank=True, upload_to="news_images/", 
+			help_text='Should be 900px or more wide')
 	teaser = models.TextField(help_text="Short version of the news item")
 	content = tinymce_models.HTMLField()
 	show_on_homepage = models.BooleanField(default=True)

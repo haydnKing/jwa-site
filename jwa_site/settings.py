@@ -40,6 +40,8 @@ INSTALLED_APPS = (
 		'django.contrib.sites',
 		'django.contrib.flatpages',
 		'tinymce',
+    'sorl.thumbnail',
+		'mce_filebrowser',
 		'orderedmodel',
 		'labdata',
 )
@@ -97,3 +99,7 @@ STATIC_ROOT = localsettings.STATIC_ROOT
 
 MEDIA_ROOT = localsettings.MEDIA_ROOT
 MEDIA_URL = "/media/"
+
+TINYMCE_DEFAULT_CONFIG = {'width': 650, 'height': 350, 'resize': True,
+  'file_browser_callback': 'mce_filebrowser'}
+

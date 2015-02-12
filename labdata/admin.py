@@ -1,9 +1,11 @@
 from django.contrib import admin
 from labdata.models import *
 
-from django.contrib.auth.admin import UserAdmin, GroupAdmin
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
 
+from django import forms
+from mce_filebrowser.admin import MCEFilebrowserAdmin
 from orderedmodel import OrderedModelAdmin
 
 from django.contrib.flatpages.admin import FlatPageAdmin
@@ -18,7 +20,7 @@ class PersonAdmin(admin.ModelAdmin):
 	fields = ["title", "name", "role", "current", "email", "mug_shot", 
 			"research_interests", "bio", "slug"]
 
-class ProjectAdmin(admin.ModelAdmin):
+class ProjectAdmin(MCEFilebrowserAdmin):
 	list_display = ('__str__', 'getType')
 	prepopulated_fields = {"slug": ("name",)}
 	fields = ['name', 'type', 'short_description','banner_image',
@@ -51,15 +53,28 @@ class FundingAdmin(admin.ModelAdmin):
 			}),
 		)
 
+class NewsAdmin(MCEFilebrowserAdmin):
+	list_display = ('title', 'pub_date')
+	prepopulated_fields = {'slug': ('title',)}
+	fieldsets = (
+			(None, {
+				'fields': ('title', 'slug', 'pub_date', 'show_on_homepage', 'banner_image'),
+				}),
+			('Content', {
+				'fields': ('teaser', 'content'),
+			}),)
+
+
+
 admin_site = MyAdminSite(name='myadmin')
 admin_site.register(User, UserAdmin)
-admin_site.register(Group, GroupAdmin)
 admin_site.register(Person, PersonAdmin)
 admin_site.register(Project, ProjectAdmin)
 admin_site.register(RelatedLink, RelatedLinkAdmin)
 admin_site.register(Resource, ResourceAdmin)
 admin_site.register(Publication, PublicationAdmin)
 admin_site.register(Funding, FundingAdmin)
+admin_site.register(NewsItem, NewsAdmin)
 
 admin_site.register(FlatPage, FlatPageAdmin)
 
