@@ -18,6 +18,3 @@ urlpatterns = patterns('',
 		url(r'^publications/$', views.publications, name='publications'),
 	)
  
-urlpatterns += patterns('django.contrib.flatpages.views',
-    url(r'^about/$', 'flatpage', {'url': '/about/'}, name='about'),
-)  
