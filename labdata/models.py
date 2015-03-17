@@ -173,4 +173,8 @@ class NewsItem(models.Model):
 
 	slug = models.SlugField(unique=True)
 
-
+class Content(models.Model):
+	"""Text content which we might want to update every now and again"""
+	name = models.CharField(max_length=32, 
+			help_text="This identifies where the text should be put")
+	content = models.TextField()
