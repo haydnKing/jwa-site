@@ -8,20 +8,11 @@
     <li><a href="{% url 'labdata:news_item' item.pub_date.year item.pub_date.month item.pub_date.day item.slug %}">{{ item.slug }}</a></li>
 {% endblock %}
 
-{% block vbreadcrumbs %}
-<li>
-    <a href="{% url 'labdata:news' %}">
-        News
-        <span class="campl-vertical-breadcrumb-indicator"></span>
-    </a>
-</li>
-{% endblock %}
-
 
 {% block localnav %}
     <li class="campl-selected">
         <a href="{% url 'labdata:news' %}">
-            News
+            Recent News
         </a>
         <ul class="campl-unstyled-list campl-vertical-breadcrumb-children">
             {% for n in recent_items %}
@@ -29,6 +20,9 @@
                 {{ n.title }}
             </a></li>
             {% endfor %}
+            <li><a href="{% url 'labdata:news_archive' %}">
+                News Archive
+            </a></li>
         </ul>
 {% endblock %}
 

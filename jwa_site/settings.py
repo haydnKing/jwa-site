@@ -100,6 +100,12 @@ STATIC_ROOT = localsettings.STATIC_ROOT
 MEDIA_ROOT = localsettings.MEDIA_ROOT
 MEDIA_URL = "/media/"
 
-TINYMCE_DEFAULT_CONFIG = {'width': 650, 'height': 350, 'resize': True,
-  'file_browser_callback': 'mce_filebrowser'}
+TINYMCE_DEFAULT_CONFIG = {
+	'width': 650, 
+	'height': 350, 
+	'resize': True,
+  'file_browser_callback': 'mce_filebrowser',
+	'convert_urls' : False,
+	'relative_urls' : False,
+}
 

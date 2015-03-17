@@ -42,6 +42,7 @@ def projects(request):
 		],
 		'show_links': True,
 		'subtitle': 'projects',
+		'name': 'projects',
 		'listing_template': 'project_listing.html',
 	})
 
@@ -63,6 +64,7 @@ def resources(request):
 			},
 		],
 		'subtitle': 'resources',
+		'name': 'resources',
 		'listing_template': 'resource_listing.html',
 		})
 
@@ -85,6 +87,7 @@ def funding(request):
 			},
 		],
 		'subtitle': 'funding',
+		'name': 'funding',
 		'listing_template': 'funding_listing.html',
 		})
 
@@ -107,6 +110,7 @@ def publications(request):
 			},
 		],
 		'subtitle': 'publications',
+		'name': 'publications',
 		'listing_template': 'publication_listing.html',
 		})
 
@@ -117,7 +121,7 @@ def news(request):
 		'month': o.pub_date.month, 
 		'day':   o.pub_date.day, 
 		'slug':  o.slug})) for o in obj]
-	localnav.append(("News Archive", "",))
+	localnav.append(("News Archive", reverse('labdata:news_archive'),))
 	return render(request, 'listing.html', {
 		'items': [
 			{
@@ -127,7 +131,27 @@ def news(request):
 			},
 		],
 		'localnav': localnav,
-		'subtitle': 'news',
+		'subtitle': 'News',
+		'name': 'news',
+		'listing_template': 'news_listing.html',
+		})
+
+def news_archive(request):
+	years = [y.year for y in NewsItem.objects.dates('pub_date', 'year')]
+	years = sorted(years, reverse=True)
+	items = [{
+		'title': str(year),
+		'id': 'year_{}'.format(year),
+		'objects':
+		NewsItem.objects.filter(pub_date__year=year).order_by('-pub_date'),
+		} for year in years]
+
+	
+	return render(request, 'listing.html', {
+		'items': items,
+		'subtitle': 'News Archive',
+		'name': 'news_archive',
+		'extracrumbs': [('News', reverse('labdata:news'),)],
 		'listing_template': 'news_listing.html',
 		})
 
@@ -150,6 +174,7 @@ def people(request):
 	return render(request, 'listing.html', {
 		'items': items,
 		'subtitle': 'people',
+		'name': 'people',
 		'listing_template': 'people_listing.html',
 	})
 

@@ -5,15 +5,25 @@
 {% block subtitle %}{{ subtitle|title }}{% endblock %}
 
 {% block breadcrumbs %}
-    <li><a href="{% url 'labdata:'|add:subtitle %}">
+    {% for crumb in extracrumbs %}
+    <li><a href="{{ crumb.1 }}">{{ crumb.0 }}</a></li>
+    {% endfor %}
+    <li><a href="{% url 'labdata:'|add:name %}">
         {{ subtitle|title }}
     </a></li>
+{% endblock %}
+
+{% block vbreadcrumbs %}
+    {% for crumb in extracrumbs %}
+    <li>
+        <a href="{{crumb.1}}">{{crumb.0}}<span class="campl-vertical-breadcrumb-indicator"></span></a></li>
+    {% endfor %}
 {% endblock %}
 
 
 {% block localnav %}
     <li class="campl-selected">
-        <a href="{% url 'labdata:'|add:subtitle %}">
+        <a href="{% url 'labdata:'|add:name %}">
             {{ subtitle|title }}
         </a>
         <ul class="campl-unstyled-list campl-vertical-breadcrumb-children">
@@ -33,7 +43,7 @@
 
 
 {% block maincontent %}
-<img src="{% static 'images/content/'|add:subtitle|add:'-header.jpg' %}" alt="" class="campl-scale-with-grid" />
+<img src="{% static 'images/content/'|add:name|add:'-header.jpg' %}" alt="" class="campl-scale-with-grid" />
 
     <div class="campl-content-container">
         {% for item in items %}
