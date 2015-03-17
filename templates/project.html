@@ -37,11 +37,7 @@
 {% endblock %}
 
 {% block maincontent %}
-    {% if project.banner_image %}
-    <img src="{{ project.banner_image.url }}" alt="" class="campl-scale-with-grid" />
-    {% else %}
-    <img src="{% static 'images/content/carousel-4.png' %}" alt="" class="campl-scale-with-grid" />
-    {% endif %}
+    <img src="{% static project.get_banner_url %}" alt="" class="campl-scale-with-grid" />
 
     <div class="campl-content-container">
         <h2>{{ project.name }}</h2>

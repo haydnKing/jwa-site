@@ -2,6 +2,7 @@ from django.db import models
 import urllib.parse, datetime
 from tinymce import models as tinymce_models
 from orderedmodel import OrderedModel
+from django.core.urlresolvers import reverse
 
 TYPE_CHOICES = {
 		's': 'Synbio',
@@ -71,6 +72,7 @@ class Person(models.Model):
 	def __str__(self):
 		return self.fullName();
 
+DEFAULT_PROJECT_BANNER = 'images/content/carousel-4.png'
 class Project(models.Model):
 	name = models.CharField(max_length=256)
 	type = models.CharField(max_length=1, choices=list(TYPE_CHOICES.items()))
@@ -94,6 +96,14 @@ class Project(models.Model):
 
 	def longArea(self):
 		return LONG_TYPES[self.type]
+
+	def get_banner_url(self):
+		if self.banner_image:
+			return self.banner_image.url
+		return DEFAULT_PROJECT_BANNER
+
+	def get_url(self):
+		return reverse('labdata:project', kwargs={'slug':self.slug})
 
 	def __str__(self):
 		return self.name
@@ -161,6 +171,7 @@ class Funding(models.Model):
 		verbose_name_plural = 'Funding items'
 		verbose_name = 'Funding item'
 
+DEFAULT_NEWSITEM_BANNER = 'images/content/carousel-4.png'
 class NewsItem(models.Model):
 	"""News from the lab"""
 	pub_date = models.DateField(default=datetime.date.today)
@@ -173,8 +184,31 @@ class NewsItem(models.Model):
 
 	slug = models.SlugField(unique=True)
 
+	def get_banner_url(self):
+		if self.banner_image:
+			return self.banner_image.url
+		return DEFAULT_NEWSITEM_BANNER
+
+	def get_url(self):
+		pd = self.pub_date
+		return reverse('labdata:news_item', kwargs={
+			'year':pd.year, 
+			'month': pd.month, 
+			'day': pd.day, 
+			'slug': self.slug,
+			})
+
+	def published_recently(self):
+		return self.pub_date >= timezone.now() - datetime.timedelta(months=2)
+	published_recently.admin_order_field = 'pub_date'
+	published_recently.boolean = True
+	published_recently.short_description = 'Published recently?'
+
 class Content(models.Model):
 	"""Text content which we might want to update every now and again"""
-	name = models.CharField(max_length=32, 
+	class Meta:
+		verbose_name_plural = 'Content'
+
+	name = models.CharField(max_length=32, unique=True,
 			help_text="This identifies where the text should be put")
-	content = models.TextField()
+	content = tinymce_models.HTMLField()

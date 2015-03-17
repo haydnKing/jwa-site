@@ -8,8 +8,6 @@ from django import forms
 from mce_filebrowser.admin import MCEFilebrowserAdmin
 from orderedmodel import OrderedModelAdmin
 
-from django.contrib.flatpages.admin import FlatPageAdmin
-from django.contrib.flatpages.models import FlatPage
 
 class MyAdminSite(admin.AdminSite):
 	site_header = "Ajioka Lab Administration"
@@ -55,6 +53,8 @@ class FundingAdmin(admin.ModelAdmin):
 
 class NewsAdmin(MCEFilebrowserAdmin):
 	list_display = ('title', 'pub_date')
+	list_filter = ['pub_date',]
+	search_fields = ['title','teaser']
 	prepopulated_fields = {'slug': ('title',)}
 	fieldsets = (
 			(None, {
@@ -64,6 +64,8 @@ class NewsAdmin(MCEFilebrowserAdmin):
 				'fields': ('teaser', 'content'),
 			}),)
 
+class ContentAdmin(admin.ModelAdmin):
+	list_display = ('name',)
 
 
 admin_site = MyAdminSite(name='myadmin')
@@ -75,6 +77,5 @@ admin_site.register(Resource, ResourceAdmin)
 admin_site.register(Publication, PublicationAdmin)
 admin_site.register(Funding, FundingAdmin)
 admin_site.register(NewsItem, NewsAdmin)
-
-admin_site.register(FlatPage, FlatPageAdmin)
+admin_site.register(Content, ContentAdmin)
 

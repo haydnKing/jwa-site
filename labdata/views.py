@@ -2,19 +2,39 @@ from django.shortcuts import get_object_or_404
 import django.shortcuts
 from django.http import Http404
 from django.core.urlresolvers import reverse
-
-from django.contrib.flatpages.models import FlatPage
-
+from django.core.exceptions import ObjectDoesNotExist
+import datetime, random
+from itertools import chain
 from labdata.models import *
 
 def render(request, template, context):
 	context['related_links'] = RelatedLink.objects.all().order_by('order')
 	return django.shortcuts.render(request, template, context)
 	
+def get_content(name):
+	try:
+		o = Content.objects.get(name=name)
+	except ObjectDoesNotExist:
+		return "<p>No content found for '{}'</p>".format(name)
+	return o.content
 
 def home(request):
-	fp = get_object_or_404(FlatPage, title="Home")
-	return render(request, 'home.html', {'flatpage': fp})
+	news = NewsItem.objects.filter(show_on_homepage=True).order_by('-pub_date')[:3]
+	carosel = list(chain(
+			NewsItem.objects.filter(show_on_homepage=True,
+				pub_date__gte = datetime.datetime.now() - datetime.timedelta(days=60)),
+			Project.objects.all()))
+
+	#choose 3
+	carosel = random.sample(carosel, 3)
+
+	return render(request, 'home.html', {
+		'greeting': get_content('home_greeting'),
+		'toxo': get_content('home_toxo'),
+		'synbio': get_content('home_synbio'),
+		'news': news,
+		'carosel': carosel,
+	})
 
 # --------------------- LISTING PAGES -----------
 SB = 'Synthetic Biology'
@@ -225,3 +245,10 @@ def news_item(request, year, month, day, slug):
 		'item': item,
 		'recent_items': NewsItem.objects.all().order_by('-pub_date')[:6],
 	})
+
+def about(request):
+	return render(request, 'about.html', {
+		'about': get_content('about'),
+		'about_synbio': get_content('about_synbio'),
+		'about_toxo': get_content('about_toxo'),
+		})

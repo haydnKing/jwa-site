@@ -1,0 +1,50 @@
+
+{% extends "content.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    {% with True as show_links %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
+
+{% block vbreadcrumbs %}
+{% endblock %}
+
+{% block localnav %}
+    <li class="campl-selected">
+        <a href="{% url 'labdata:about' %}">
+            About
+        </a>
+        <ul class="campl-unstyled-list campl-vertical-breadcrumb-children">
+            <li><a href="#toxo">Toxoplasma Gondii</a></li>
+            <li><a href="#synbio">Synthetic Biology</a></li>
+        </ul>
+    </li>
+{% endblock %}
+
+{% block subtitle %}About the Lab{% endblock %}
+
+{% block maincontent %}
+<img src="/static/images/content/recessed-image-placeholder.jpg" alt="" class="campl-scale-with-grid">
+<div class="campl-content-container">
+
+<h2>The Ajioka Group</h2>
+    {{ about|safe }}
+
+<h2 id='toxo'>Toxoplasma Gondii</h2>
+<div class='clearfix'>
+    {{ about_toxo|safe }}
+<a href="/projects#toxo" class="campl-secondary-cta campl-float-right">View Projects</a>
+</div>
+
+<h2 id='synbio'>Synthetic Biology</h2>
+<div class='clearfix'>
+    {{ about_synbio|safe }}
+<a href="/projects#synbio" class="campl-secondary-cta campl-float-right">View Projects</a>
+</div>
+
+</div>
+{% endblock %}
+
+
