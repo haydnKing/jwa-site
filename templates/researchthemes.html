@@ -1,0 +1,31 @@
+{% extends "listing.html" %}
+{% load staticfiles %}
+
+
+{% block subtitle %}{{ subtitle|title }}{% endblock %}
+
+
+
+
+{% block localnav %}
+    <li class="campl-selected">
+        <a href="{% url 'labdata:'|add:name %}">
+            {{ subtitle|title }}
+        </a>
+        <ul class="campl-unstyled-list campl-vertical-breadcrumb-children">
+            {% for theme in themes %}
+            <li><a href="{% url 'labdata:research_theme' theme.slug %}">{{ theme.name }}</a></li>
+            {% endfor %}
+        </ul>
+{% endblock %}
+
+
+{% block maincontent %}
+<img src="{% static 'images/content/'|add:name|add:'-header.jpg' %}" alt="" class="campl-scale-with-grid" />
+
+<div class="campl-content-container">
+    {% include 'researchtheme_listing.html' with arg=themes only %}
+</div>
+
+{% endblock %}
+

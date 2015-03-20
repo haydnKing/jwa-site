@@ -1,12 +1,21 @@
+{% load staticfiles %}
 {% for p in arg %}
-    <div class="campl-listing-item clearfix">
-        <p class="campl-listing-title">
+
+<a href="{% url 'labdata:research_theme' p.slug %}"><h2>{{ p.name }}</h2></a>
+<div class="clearfix">
+    <div class="campl-column2">
+        <div class="campl-content-container">
             <a href="{% url 'labdata:research_theme' p.slug %}">
-                {{ p.name }}
+                <img src="{% static p.get_teaser_url %}" class="campl-scale-with-grid">
             </a>
-        </p>
-        <p>
-            {{ p.short_description }}
-        </p>
+        </div>
     </div>
+    <div class="campl-column10">
+        <div class="campl-content-container">
+            <p>{{ p.short_description }}</p>
+            <p><a class="campl-secondary-cta campl-float-right" href="{% url 'labdata:research_theme' p.slug %}">Read More</a></p>
+        </div>
+    </div>
+</div>
+
 {% endfor %}

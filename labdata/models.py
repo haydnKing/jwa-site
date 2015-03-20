@@ -73,34 +73,27 @@ class Person(models.Model):
 		return self.fullName();
 
 DEFAULT_THEME_BANNER = 'images/content/carousel-4.png'
+DEFAULT_THEME_TEASER = 'images/content/image-placeholder.jpg'
 class ResearchTheme(models.Model):
 	name = models.CharField(max_length=256)
-	type = models.CharField(max_length=1, choices=list(TYPE_CHOICES.items()))
-	short_description = models.CharField(max_length=512)
+	short_description = models.TextField()
+	teaser_image = models.ImageField(blank=True, upload_to="project_images/",
+			help_text='Small image to show in \"Research Themes\" page, 100x100px')
 	long_description = tinymce_models.HTMLField()
 	person = models.ManyToManyField(Person)
 	slug = models.SlugField(unique=True)
 	banner_image = models.ImageField(blank=True, upload_to="project_images/",
-			help_text='Should be 900px or more wide')
-
-	def getType(self):
-		return TYPE_CHOICES[self.type]
-	getType.short_description = "Type"
-
-	def area(self):
-		if self.type == 's':
-			return 'synbio'
-		elif self.type == 't':
-			return 'toxo'
-		return 'other'
-
-	def longArea(self):
-		return LONG_TYPES[self.type]
+			help_text='To be shown above the theme page and in the carosel on the homepage, 900x400px')
 
 	def get_banner_url(self):
 		if self.banner_image:
 			return self.banner_image.url
 		return DEFAULT_THEME_BANNER
+
+	def get_teaser_url(self):
+		if self.teaser_image:
+			return self.teaser_image.url
+		return DEFAULT_THEME_TEASER
 
 	def get_url(self):
 		return reverse('labdata:research_theme', kwargs={'slug':self.slug})

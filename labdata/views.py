@@ -44,23 +44,9 @@ TXi = 'toxo'
 OT = 'Other'
 OTi = 'other'
 def research_themes(request):
-	return render(request, 'listing.html', {
-		'items': [
-			{
-				'title': SB,
-				'id': SBi,
-				'objects': ResearchTheme.objects.filter(type='s').order_by('name'),
-			},{
-				'title': TX,
-				'id': TXi,
-				'objects': ResearchTheme.objects.filter(type='t').order_by('name'),
-			},{
-				'title': OT,
-				'id': OTi,
-				'objects': ResearchTheme.objects.filter(type='o').order_by('name'),
-			},
-		],
-		'show_links': True,
+	return render(request, 'researchthemes.html', {
+		'themes': ResearchTheme.objects.all().order_by('name'),
+		'show_links': False,
 		'subtitle': 'Research Themes',
 		'name': 'research_themes',
 		'listing_template': 'researchtheme_listing.html',
@@ -207,7 +193,7 @@ def research_theme(request, slug):
 				'title': 'Ajioka Lab',
 				'subtitle': 'research_theme',
 				'theme': theme,
-				'themes': ResearchTheme.objects.filter(type=theme.type).order_by('name'),
+				'themes': ResearchTheme.objects.all().order_by('name'),
 				'show_links': False,
 	}
 

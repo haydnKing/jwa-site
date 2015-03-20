@@ -19,10 +19,20 @@ class PersonAdmin(admin.ModelAdmin):
 			"research_interests", "bio", "slug"]
 
 class ResearchThemeAdmin(MCEFilebrowserAdmin):
-	list_display = ('__str__', 'getType')
+	list_display = ('__str__',)
 	prepopulated_fields = {"slug": ("name",)}
-	fields = ['name', 'type', 'short_description','banner_image',
-			'long_description','person','slug',]
+	
+	fieldsets = (
+			(None,{
+				'fields': ('name','slug'),
+			}),
+			('Brief Details', {
+				'fields': ('teaser_image', 'short_description',)
+			}),
+			('Full Details', {
+				'fields': ('banner_image', 'long_description', 'person')
+			}),
+		)
 
 class RelatedLinkAdmin(OrderedModelAdmin):
 	list_display = ('text', 'url', 'reorder')
