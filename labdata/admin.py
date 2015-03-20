@@ -18,7 +18,7 @@ class PersonAdmin(admin.ModelAdmin):
 	fields = ["title", "name", "role", "current", "email", "mug_shot", 
 			"research_interests", "bio", "slug"]
 
-class ProjectAdmin(MCEFilebrowserAdmin):
+class ResearchThemeAdmin(MCEFilebrowserAdmin):
 	list_display = ('__str__', 'getType')
 	prepopulated_fields = {"slug": ("name",)}
 	fields = ['name', 'type', 'short_description','banner_image',
@@ -71,7 +71,7 @@ class ContentAdmin(admin.ModelAdmin):
 admin_site = MyAdminSite(name='myadmin')
 admin_site.register(User, UserAdmin)
 admin_site.register(Person, PersonAdmin)
-admin_site.register(Project, ProjectAdmin)
+admin_site.register(ResearchTheme, ResearchThemeAdmin)
 admin_site.register(RelatedLink, RelatedLinkAdmin)
 admin_site.register(Resource, ResourceAdmin)
 admin_site.register(Publication, PublicationAdmin)

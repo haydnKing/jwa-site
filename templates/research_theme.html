@@ -1,21 +1,21 @@
 {% extends "content.html" %}
 {% load staticfiles %}
 
-{% block subtitle %}Projects : {{project.name}}{% endblock %} 
+{% block subtitle %}{{theme.name}}{% endblock %} 
 
 {% block breadcrumbs %}
-    <li><a href="{% url 'labdata:projects' %}">
+    <li><a href="{% url 'labdata:research_themes' %}">
         {{ subtitle|title }}
     </a></li>
-    <li><a href="{% url 'labdata:project' project.slug %}">
-        {{ project.name }}
+    <li><a href="{% url 'labdata:research_theme' theme.slug %}">
+        {{ theme.name }}
     </a></li>
 {% endblock %}
 
 {% block vbreadcrumbs %}
 <li>
-    <a href="{% url 'labdata:'|add:subtitle %}">
-        Projects
+    <a href="{% url 'labdata:research_themes' %}">
+        Research Themes
         <span class="campl-vertical-breadcrumb-indicator"></span>
     </a>
 </li>
@@ -24,12 +24,12 @@
 
 {% block localnav %}
     <li class="campl-selected">
-        <a href="{% url 'labdata:projects' %}#{{ project.area }}">
-            {{ project.longArea }}
+        <a href="{% url 'labdata:research_themes' %}#{{ theme.area }}">
+            {{ theme.longArea }}
         </a>
         <ul class="campl-unstyled-list campl-vertical-breadcrumb-children">
-            {% for p in projects %}
-            <li><a href="{% url 'labdata:project' p.slug %}">
+            {% for p in themes %}
+            <li><a href="{% url 'labdata:research_theme' p.slug %}">
                 {{ p.name }}
             </a></li>
             {% endfor %}
@@ -37,16 +37,16 @@
 {% endblock %}
 
 {% block maincontent %}
-    <img src="{% static project.get_banner_url %}" alt="" class="campl-scale-with-grid" />
+    <img src="{% static theme.get_banner_url %}" alt="" class="campl-scale-with-grid" />
 
     <div class="campl-content-container">
-        <h2>{{ project.name }}</h2>
+        <h2>{{ theme.name }}</h2>
 
-        {{ project.long_description|safe }}
+        {{ theme.long_description|safe }}
 
         <h3>People</h3>
             <ul class="campl-unstyled-list">
-                {% for p in project.person.all %}
+                {% for p in theme.person.all %}
                 <li><a href="{% url "labdata:person" p.slug %}">{{ p.fullName }}</a></li>
                 {% endfor %}
                 </li>

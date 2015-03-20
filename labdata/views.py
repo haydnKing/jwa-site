@@ -23,7 +23,7 @@ def home(request):
 	carosel = list(chain(
 			NewsItem.objects.filter(show_on_homepage=True,
 				pub_date__gte = datetime.datetime.now() - datetime.timedelta(days=60)),
-			Project.objects.all()))
+			ResearchTheme.objects.all()))
 
 	#choose 3
 	carosel = random.sample(carosel, 3)
@@ -43,27 +43,27 @@ TX = 'Toxoplasma Gondii'
 TXi = 'toxo'
 OT = 'Other'
 OTi = 'other'
-def projects(request):
+def research_themes(request):
 	return render(request, 'listing.html', {
 		'items': [
 			{
 				'title': SB,
 				'id': SBi,
-				'objects': Project.objects.filter(type='s').order_by('name'),
+				'objects': ResearchTheme.objects.filter(type='s').order_by('name'),
 			},{
 				'title': TX,
 				'id': TXi,
-				'objects': Project.objects.filter(type='t').order_by('name'),
+				'objects': ResearchTheme.objects.filter(type='t').order_by('name'),
 			},{
 				'title': OT,
 				'id': OTi,
-				'objects': Project.objects.filter(type='o').order_by('name'),
+				'objects': ResearchTheme.objects.filter(type='o').order_by('name'),
 			},
 		],
 		'show_links': True,
-		'subtitle': 'projects',
-		'name': 'projects',
-		'listing_template': 'project_listing.html',
+		'subtitle': 'Research Themes',
+		'name': 'research_themes',
+		'listing_template': 'researchtheme_listing.html',
 	})
 
 def resources(request):
@@ -199,19 +199,19 @@ def people(request):
 	})
 
 #-------------- SINGLE PAGES
-def project(request, slug):
-	"""Project detail page"""
+def research_theme(request, slug):
+	"""research theme detail page"""
 
-	project = get_object_or_404(Project, slug=slug)
+	theme = get_object_or_404(ResearchTheme, slug=slug)
 	ctx = {
 				'title': 'Ajioka Lab',
-				'subtitle': 'projects',
-				'project': project,
-				'projects': Project.objects.filter(type=project.type).order_by('name'),
+				'subtitle': 'research_theme',
+				'theme': theme,
+				'themes': ResearchTheme.objects.filter(type=theme.type).order_by('name'),
 				'show_links': False,
 	}
 
-	return render(request, 'project.html', ctx)
+	return render(request, 'research_theme.html', ctx)
 
 def person(request, slug):
 	people = Person.objects.all().order_by('name')
@@ -221,16 +221,8 @@ def person(request, slug):
 		'people': people,
 		'show_links': False,
 		'person': person,
-		'projects': person.project_set.all(),
+		'themes': person.researchtheme_set.all(),
 		'publications': person.publication_set.all(),
-	})
-
-def funding_item(request, id):
-	project = get_object_or_404(Funding, id=id)
-	
-	return render(request, 'funding_item.html', {
-		'funding_item': funding_item,
-		'show_links': False,
 	})
 
 def news_item(request, year, month, day, slug):

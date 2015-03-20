@@ -72,8 +72,8 @@ class Person(models.Model):
 	def __str__(self):
 		return self.fullName();
 
-DEFAULT_PROJECT_BANNER = 'images/content/carousel-4.png'
-class Project(models.Model):
+DEFAULT_THEME_BANNER = 'images/content/carousel-4.png'
+class ResearchTheme(models.Model):
 	name = models.CharField(max_length=256)
 	type = models.CharField(max_length=1, choices=list(TYPE_CHOICES.items()))
 	short_description = models.CharField(max_length=512)
@@ -100,10 +100,10 @@ class Project(models.Model):
 	def get_banner_url(self):
 		if self.banner_image:
 			return self.banner_image.url
-		return DEFAULT_PROJECT_BANNER
+		return DEFAULT_THEME_BANNER
 
 	def get_url(self):
-		return reverse('labdata:project', kwargs={'slug':self.slug})
+		return reverse('labdata:research_theme', kwargs={'slug':self.slug})
 
 	def __str__(self):
 		return self.name
